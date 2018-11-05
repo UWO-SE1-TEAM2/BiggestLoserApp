@@ -24,3 +24,6 @@ a:hover {
 	color: #51b0d6;
 	text-decoration: none;
 }
+#graphInfo {
+	margin-top: 10px;
+}

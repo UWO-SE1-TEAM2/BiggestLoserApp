@@ -52,6 +52,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="container" id="graphInfo">
+			<h5>Insert Graph Here</h5>
+		</div>
 		<!--Popup container-->
 		<div class="modal fade" id="groupInfo" role="dialog">
 			<div class="modal-dialog">
