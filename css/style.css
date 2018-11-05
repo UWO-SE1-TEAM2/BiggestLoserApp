@@ -1,0 +1,26 @@
+.container {
+	background: rgba(125, 125, 125, 0.35);
+	border-radius: 10px;
+}
+#navbar {
+	background-color: black;
+	border: 0px;
+}
+#col1 {
+	border-right: 30px solid white;
+}
+img {
+	padding: 10px;
+}
+.modal-header {
+	border-bottom: 1px solid black;
+	border-left: 10px solid white;
+	border-right: 10px solid white;
+}
+a { 
+	color: black;
+}
+a:hover {
+	color: #51b0d6;
+	text-decoration: none;
+}
