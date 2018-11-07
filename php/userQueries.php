@@ -1,5 +1,4 @@
 <?php
-    // ************ User *************
     function insertUser($username, $password){
         global $db;
         try{
