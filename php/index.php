@@ -1,86 +1,84 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Biggest Loser</title>
+		<title>The Biggest Loser</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="../css/bootstrap.min.css" rel="stylesheet">
-		<link href="../css/style.css" rel="stylesheet">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+		<link rel="stylesheet" type="text/css"  href="../css/mainStyle.css" />
 	</head>
 	<body>
 		<!--Navbar container-->
-		<div class="navbar navbar-inverse navbar-static-top" id="navbar">
-			<div class="container" id="navbar">
-				<a href="" class="navbar-brand">Biggest Loser</a>
-				<div class="collapse navbar-collapse navHeaderCollapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="">Home</a></li><!--Link to home page-->
-						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-toggle="dropdown">Groups <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="">Group name</a></li><!--Link to group page-->
-								</ul>
-						</li>
-						<li><a href="">Logout</a></li><!--Link to login page-->
-					</ul>
-				</div>	
-			</div>
-		</div>
+		<?php include_once 'navigationBar.php';?>
 		<!--Content container-->
-		<div class="container" id="userInfo">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-4" id="col1">
-					<img src="http://mainenordmenn.com/wp-content/uploads/2017/09/Maine-Nordmenn-Board-Generic-Profile.jpg" class="img-rounded">
-					<h5>User: <em>Display Name</em></h5> <!--Needs to grab username from database-->
-					<h5>Current Weight: <em>Display Weight</em></h5> <!--Needs current weight from database-->
-					<h5>Total weight lost: <em>Display Net Weight Loss/Gain</em></h5> <!--Needs total weight lost from database-->
-					<form class="form-inline" method="get" action=""> <!-- Sends info to database -->
-					<div class="form-group">
-						<input type="text" name="weight" id="weight" class="form-control" onfocus="" placeholder="Enter new weight:">
-					</div>
-					<input class="btn btn-primary" type="submit" value="Enter Weight">
+					<!-- TODO: connect GUI to DB -->
+					<h2 id="username">Username</h2>
+					Current Weight: <em id="weight">No weight data available</em>
+					<br>
+					Progress: <em id="totalWeightDifference">No weight data available.</em>
+					<br>
+					<br>
+					<form method="post" action=""> <!-- Sends info to database -->
+						<div class="form-group">
+							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
+							<br>
+							<input type="submit" class="btn btn-info form-control" value="Update Weight">
+						</div>
+						<div class="form-group">
+
+						</div>
 					</form>
-				</div>	
+					<button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#groupInfo">
+					  Start New Group
+					</button>
+				</div>
 				<div class="col-md-8" id="col2">
-					<h3>Your Groups: </h3>
-					<ul> <!--Will display all groups-->
-						<li><a href="">List groups here</a></li><!--Links to group page-->
+					<h2>Your Groups: </h2>
+					<ul> <!-- TODO: generate group from DB-->
+						<li><a href="">Group 1</a></li>
 					</ul>
-					<a href="#groupInfo" class="btn btn-primary" data-toggle="modal">Start a new group</a>
 				</div>
 			</div>
-		</div>
-		<div class="container" id="graphInfo">
-			<h5>Insert Graph Here</h5>
-		</div>
-		<!--Popup container-->
-		<div class="modal fade" id="groupInfo" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3>Group Info</h3>
-					</div>
-					<div class="modal-body">
-						<form method="get" action=""><!--Sends info to database-->
-							<div class="form-group">
-								<label for="groupName">Group name:</label>
-								<input type="text" name="groupName" class="form-control" onfocus="" placeholder="Enter group name:">
-							</div>
-							<div class="form-group">
-								<label for="groupMembers">Add members:</label>
-								<input type="text" name="groupMembers" class="form-control" onfocus="" placeholder="i.e. (name, name, name)">
-							</div>
-							<input class="btn btn-primary" type="submit" value="Create group" href=""><!--Takes user to group page-->
-						</form>
+			<br><br>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3" id="graphContainer">
+					Graph
+				</div>
+			</div>
+			<!--Popup container-->
+			<div class="modal fade" id="groupInfo" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3>Provide Group Info</h3>
+						</div>
+						<div class="modal-body">
+							<form method="get" action=""><!--Sends info to database-->
+								<div class="form-group">
+									<label for="groupName">Group Name:</label>
+									<input type="text" name="groupName" class="form-control">
+									<br>
+									<label for="groupMembers">Add members (if adding multiple members
+										at once separate with ','):</label>
+									<input type="text" name="groupMembers" class="form-control"
+										placeholder="i.e. username, username, username">
+									<br>
+									<input class="btn btn-info form-control" type="button" value="Create group" href="">
+								</div>
+								<!--Takes user to group page-->
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
+			<br>
+			<?php include_once 'footer.php';?>
 		</div>
-		
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="../js/bootstrap.js"></script>
-		
 	</body>
 </html>

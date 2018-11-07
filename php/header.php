@@ -1,6 +1,6 @@
 <?php
   echo '<div id="pageHeader">
-  	<br><br>
-	<img src="../images/biggestLoserWordCloud.jpg" class="center-block" height="250">
+  	<br>
+	<img src="../images/biggestLoser.jpg" class="center-block" height="150">
 </div>' ;
 ?>

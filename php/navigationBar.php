@@ -1,16 +1,19 @@
-<?
-echo '<nav class="navbar navbar">
-<div class="container-fluid" id="biggestLoserNavigationBar">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="#">Biggest Loser</a>
+<?php echo '
+<div class="navbar navbar navbar-static-top" id="navbar">
+	<div class="container" id="navbar">
+		<a href="" class="navbar-brand biggestLoser"><img src="../images/biggestLoser.jpg" class="center-block" height="50"></a>
+		<div class="collapse navbar-collapse navHeaderCollapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="">Home</a></li><!--Link to home page-->
+				<li class="dropdown">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown">Groups <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="">Group name</a></li><!--Link to group page-->
+						</ul>
+				</li>
+				<li><a href="">Logout</a></li><!--Link to login page-->
+			</ul>
+		</div>
 	</div>
-	<ul class="nav navbar-nav">
-		<li class="active"><a href="#">Home</a></li>
-
-		</li>
-		<li><a href="#">Change Password</a></li>
-		<li><a href="#">Sign Out</a></li>
-	</ul>
 </div>
-</nav>'
-?>
+';?>

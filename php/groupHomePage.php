@@ -1,5 +1,5 @@
 <html>
-	<head> 
+	<head>
 		<meta charset="utf-8" />
 		<title>Biggest Loser</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</head>
 	<body>
-		<?php include_once 'header.php';?>
+		<?php include_once 'navigationBar.php';?>
 		<div class="container-fluid">
 			<p id="groupName">Group 1</p>
 			<div id="graph">
@@ -15,7 +15,7 @@
 			<div class = "container">
 				<h2>Weight Lost Progress</h2>
 				<table class="table table-striped">
-					<thead> 
+					<thead>
 						<tr>
 							<th>Member</th>
 							<th>Weight Lost Progress</th>
@@ -25,6 +25,7 @@
 				</table>
 			</div>
 		</div>
+		<br>
 		<?php include_once 'footer.php';?>
 	</body>
 </html>
