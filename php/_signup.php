@@ -13,7 +13,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-		<link rel="stylesheet" type="text/css"  href="mainStyle.css" />
+		<link rel="stylesheet" type="text/css"  href="../css/mainStyle.css" />
 
 	</head>
 
@@ -48,6 +48,6 @@
 				</div>
 			</div>
 		</div>
-		<?php include_once 'header.php'?>
+		<?php include_once 'footer.php';?>
 	</body>
 </html>

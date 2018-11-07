@@ -1,5 +1,5 @@
 <?php
-  echo '<div class="footer" class="center-block">
-    <p>&copy; 2018 Software Engineering I Team 2</p>
+  echo '<div id="footer">
+	  <p class="text-center">&copy; 2018 Software Engineering I Team 2</p>
   </div>';
 ?>
