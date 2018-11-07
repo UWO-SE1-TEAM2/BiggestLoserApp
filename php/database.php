@@ -26,7 +26,7 @@
   {
 
     global $db;
-	$db = null;
+	  $db = null;
 
   }
 
