@@ -1,10 +1,10 @@
 <?php
-    function InsertAdminToGroup($username, $group){
+    function InsertAdminToGroup($username, $groupName){
         global $db;
         try{
             $query = "INSERT INTO Admin VALUES (?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username, $group]);
+            $stmt->execute([$username, $groupName]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -12,10 +12,10 @@
         }
     }
 
-    function DeleteAdminFromGroup($username, $group){
+    function DeleteAdminFromGroup($username, $groupName){
         global $db;
         try{
-            $query = "DELETE FROM Admin WHERE Username = $username, Group = $group";
+            $query = "DELETE FROM Admin WHERE Username = $username, Group = $groupName";
             $stmt = $db->prepare($query);
             $stmt->execute();
             return true;
