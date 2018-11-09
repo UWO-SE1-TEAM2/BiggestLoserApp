@@ -17,7 +17,7 @@
         try{
             $query = "DELETE FROM User WHERE username = $username";
             $stmt = $db->prepare($query);
-            $stmt->execute()
+            $stmt->execute();
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -28,7 +28,7 @@
     function updateUser($password){
         global $db;
         try{
-            $query = "UPDATE User SET Password = ?"
+            $query = "UPDATE User SET Password = ?";
             $stmt = $db->prepare($query);
             $stmt->execute([$password]);
             return true;
@@ -60,7 +60,7 @@
             return $stmt->fetchAll();
         } catch(PDOException $e){
             db_disconnect();
-            exit("Aborting: There was a database error when retrieving users.")
+            exit("Aborting: There was a database error when retrieving users.");
         }
     }
 ?>
