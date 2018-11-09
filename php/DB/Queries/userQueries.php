@@ -25,7 +25,7 @@
         }
     }
 
-    function UpdateUser($password){
+    function UpdatePasswordForUser($password){
         global $db;
         try{
             $query = "UPDATE User SET Password = ?";
