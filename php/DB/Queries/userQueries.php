@@ -1,5 +1,5 @@
 <?php
-    function insertUser($username, $password){
+    function InsertUser($username, $password){
         global $db;
         try{
             $query = "INSERT INTO User VALUES (?, ?)";
@@ -12,7 +12,7 @@
         }
     }
 
-    function deleteUser($username){
+    function DeleteUser($username){
         global $db;
         try{
             $query = "DELETE FROM User WHERE username = $username";
@@ -25,7 +25,7 @@
         }
     }
 
-    function updateUser($password){
+    function UpdateUser($password){
         global $db;
         try{
             $query = "UPDATE User SET Password = ?";
@@ -38,7 +38,7 @@
         }
     }
 
-    function getUserbyUsername($username){
+    function GetUserbyUsername($username){
         global $db;
         try{
             $query = "SELECT * FROM User WHERE username = $username";
@@ -51,7 +51,7 @@
         }
     }
 
-    function getAllUsers(){
+    function GetAllUsers(){
         global $db;
         try{
             $query = "SELECT * FROM User";

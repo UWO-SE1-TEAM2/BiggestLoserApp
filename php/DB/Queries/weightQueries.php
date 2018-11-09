@@ -1,13 +1,9 @@
 <?php
-    function InsertWeight(){
+    function InsertWeight(string username, double weight, Date date){
 
     }
 
-    function UpdateWeight(){
+    function UpdateWeight(string username, double weight, Date date){
 
-    }
-
-    function DeleteWeight(){
-        
     }
 ?>

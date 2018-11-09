@@ -1,5 +1,5 @@
 <?php
-    function insertAdminToGroup($username, $group){
+    function InsertAdminToGroup($username, $group){
         global $db;
         try{
             $query = "INSERT INTO Admin VALUES (?, ?)";
@@ -12,7 +12,7 @@
         }
     }
 
-    function deleteAdminFromGroup($username, $group){
+    function DeleteAdminFromGroup($username, $group){
         global $db;
         try{
             $query = "DELETE FROM Admin WHERE Username = $username, Group = $group";
