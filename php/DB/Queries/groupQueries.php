@@ -25,6 +25,19 @@
         }
     }
 
+    function UpdateGroup($name, $winner, $endDate, $isArchived){
+        global $db;
+        try{
+            $query = "UPDATE Group SET Name = ?, Winner = ?, EndDate = ?, IsArchived = ?";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$name, $winner, $endDate, $isArchived]);
+            return true;
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when updating group.");
+        }
+    }
+
     function GetAllGroups(){
         global $db;
         try{
