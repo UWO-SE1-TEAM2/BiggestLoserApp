@@ -5,7 +5,7 @@
             // $query = "INSERT INTO User VALUES (?, ?)";
             $query = "CALL InsertUser(?,?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username, $password]);
+            $stmt->execute([$username, password_hash($password, PASSWORD_BCRYPT)]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -41,18 +41,19 @@
         }
     }
 
-    // function GetUserbyUsername($username){
-    //     global $db;
-    //     try{
-    //         $query = "SELECT * FROM User WHERE username = $username";
-    //         $stmt = $db->prepare($query);
-    //         $stmt->execute();
-    //         return $stmt->fetchAll();
-    //     } catch(PDOException $e){
-    //         db_disconnect();
-    //         exit("Aborting: There was a database error when retrieving user.");
-    //     }
-    // }
+    function GetUserbyUsername($username){
+        global $db;
+        try{
+            // $query = "SELECT * FROM User WHERE username = $username";
+            $query = "CALL GetUserByUsername(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$username]);
+            return $stmt->fetchAll();
+        } catch(PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving user.");
+        }
+    }
 
     function GetAllUsers(){
         global $db;
