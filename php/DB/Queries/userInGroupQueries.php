@@ -2,7 +2,8 @@
     function InsertUserIntoGroup($username, $groupName){
         global $db;
         try{
-            $query = "INSERT INTO UserInGroup VALUES (?, ?)";
+            // $query = "INSERT INTO UserInGroup VALUES (?, ?)";
+            $query = "CALL InsertUserIntoGroup(?,?)"
             $stmt = $db->prepare($query);
             $stmt->execute([$username, $groupName]);
             return true;
@@ -15,7 +16,8 @@
     function DeleteUserFromGroup($username, $groupName){
         global $db;
         try{
-            $query = "DELETE FROM UserInGroup WHERE Username = ?, GroupName = ?";
+            // $query = "DELETE FROM UserInGroup WHERE Username = ?, GroupName = ?";
+            $query = "Call DeleteUserFromGroup(?,?)"
             $stmt = $db->prepare($query);
             $stmt->execute([$username, $groupName]);
             return true;

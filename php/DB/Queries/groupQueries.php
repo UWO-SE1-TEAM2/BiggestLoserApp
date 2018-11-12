@@ -1,8 +1,17 @@
 <?php
-    function InsertGroup($name){
+    function InsertGroupUser($name){
         global $db;
+        // try{
+        //     $query = "INSERT INTO Group VALUES (?)";
+        //     $stmt = $db->prepare($query);
+        //     $stmt->execute([$name]);
+        //     return true;
+        // } catch (PDOException $e){
+        //     db_disconnect();
+        //     exit("Aborting: There was a database error when inserting group.");
+        // }
         try{
-            $query = "INSERT INTO Group VALUES (?)";
+            $query = "CALL InsertGroupUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$name]);
             return true;
@@ -12,10 +21,11 @@
         }
     }
 
-    function ArchiveGroup($name){
+    function ArchiveGroupUser($name){
         global $db;
         try{
-            $query = "UPDATE Group SET IsArchived = 1 WHERE Name = $name";
+            // $query = "UPDATE Group SET IsArchived = 1 WHERE Name = $name";
+            $query = "CALL ArchiveGroupUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$name]);
             return true;
@@ -28,7 +38,8 @@
     function UpdateGroup($name, $winner, $endDate, $isArchived){
         global $db;
         try{
-            $query = "UPDATE Group SET Name = ?, Winner = ?, EndDate = ?, IsArchived = ?";
+            // $query = "UPDATE Group SET Name = ?, Winner = ?, EndDate = ?, IsArchived = ?";
+            $query = "CALL UpdateGroupUser(?,?,?,?)"
             $stmt = $db->prepare($query);
             $stmt->execute([$name, $winner, $endDate, $isArchived]);
             return true;
@@ -41,7 +52,8 @@
     function GetAllGroups(){
         global $db;
         try{
-            $query = "SELECT * FROM Group";
+            // $query = "SELECT * FROM Group";
+            $query = "CALL GetAllGroups()";
             $stmt = $db->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll();

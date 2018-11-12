@@ -2,7 +2,8 @@
     function InsertUser($username, $password){
         global $db;
         try{
-            $query = "INSERT INTO User VALUES (?, ?)";
+            // $query = "INSERT INTO User VALUES (?, ?)";
+            $query = "CALL InsertUser(?,?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username, $password]);
             return true;
@@ -15,7 +16,8 @@
     function DeleteUser($username){
         global $db;
         try{
-            $query = "DELETE FROM User WHERE username = $username";
+            // $query = "DELETE FROM User WHERE username = $username";
+            $query = "CALL DeleteUser(?)"
             $stmt = $db->prepare($query);
             $stmt->execute();
             return true;
@@ -28,7 +30,8 @@
     function UpdatePasswordForUser($password){
         global $db;
         try{
-            $query = "UPDATE User SET Password = ?";
+            // $query = "UPDATE User SET Password = ?";
+            $query = "CALL UpdatePasswordForUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$password]);
             return true;
@@ -38,23 +41,24 @@
         }
     }
 
-    function GetUserbyUsername($username){
-        global $db;
-        try{
-            $query = "SELECT * FROM User WHERE username = $username";
-            $stmt = $db->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll();
-        } catch(PDOException $e){
-            db_disconnect();
-            exit("Aborting: There was a database error when retrieving user.");
-        }
-    }
+    // function GetUserbyUsername($username){
+    //     global $db;
+    //     try{
+    //         $query = "SELECT * FROM User WHERE username = $username";
+    //         $stmt = $db->prepare($query);
+    //         $stmt->execute();
+    //         return $stmt->fetchAll();
+    //     } catch(PDOException $e){
+    //         db_disconnect();
+    //         exit("Aborting: There was a database error when retrieving user.");
+    //     }
+    // }
 
     function GetAllUsers(){
         global $db;
         try{
-            $query = "SELECT * FROM User";
+            // $query = "SELECT * FROM User";
+            $query = "CALL GetAllUsers()";
             $stmt = $db->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll();
