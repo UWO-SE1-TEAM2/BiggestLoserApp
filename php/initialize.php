@@ -1,7 +1,7 @@
 <?php
 
-require_once('database.php');
-require_once('queries.php');
+require_once('DB/database.php');
+require_once('DB/queries.php');
 
 $db = db_connect();
 
