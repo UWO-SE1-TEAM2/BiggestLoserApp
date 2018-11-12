@@ -62,12 +62,18 @@
 							<form method="get" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
-									<input type="text" name="groupName" class="form-control">
+									<input type="text" name="groupName" class="form-control" required>
 									<br>
 									<label for="groupMembers">Add members (if adding multiple members
 										at once separate with ','):</label>
 									<input type="text" name="groupMembers" class="form-control"
 										placeholder="i.e. username, username, username">
+									<br>
+									<label for="startDate">Biggest Loser Start Date:</label>
+									<input type="date" id="startDate" class="form-control" required>
+									<br>
+									<label for="endDate">Biggest Loser End Date:</label>
+									<input type="date" id="endDate" class="form-control" required>
 									<br>
 									<input class="btn btn-info form-control" type="button" value="Create group" href="">
 								</div>
