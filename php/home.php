@@ -1,7 +1,18 @@
 <?php
+	session_start()  ;
+	require_once('initialize.php') ;
+	global $db ;
+	if(!isset($_SESSION['ID']))
+	{
+		header("Location:" . "index.php") ;
+	}
+	else
+	{
+		$UN = $_SESSION['username'] ;
+	}
+
 	require_once("initialize.php");
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,7 +33,9 @@
 			<div class="row">
 				<div class="col-md-4" id="col1">
 					<!-- TODO: connect GUI to DB -->
-					<h2 id="username">Username</h2>
+					<h2 id="username" class="biggestLoser">
+						<?php echo $UN;?>
+					</h2>
 					Current Weight: <em id="weight">No weight data available</em>
 					<br>
 					Progress: <em id="totalWeightDifference">No weight data available.</em>

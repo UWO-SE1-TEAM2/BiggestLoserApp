@@ -8,8 +8,8 @@
 	</head>
 	<body>
 		<?php include_once 'navigationBar.php';?>
-		<div class="container-fluid">
-			<p id="groupName">Group 1</p>
+		<div class="container">
+			<h2 id="groupName">Group 1</h2>
 			<div id="graph">
 			</div>
 			<div class = "container">

@@ -1,7 +1,5 @@
 <?PHP
 	session_start()  ;
-	$dir = realpath(__DIR__ . '/../..').'/DB' ;
-	$pdir = dirname(__FILE__) ;
 	require_once('initialize.php') ;
 ?>
 
@@ -12,6 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>The Biggest Loser : Log In</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
@@ -23,7 +22,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-		          	<p class="text-center">Please fill in your credentials to login.</p>
+
 		 	  		<form method="post" action="index.php">
 					<?PHP
 						if($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -31,20 +30,27 @@
 							global $db ;
 							$UN = $_POST['username'] ;
 							$PW = $_POST['password'] ;
-							$_SESSION['username'] = $UN ;
-
 							try
 							{
-								$dbResult = GetUserByUsername($UN);
-								echo $dbResult[1]['Password'];
-								if(password_verify($dbResult['Password'], $PW))
+								$result = GetUserbyUsername($UN);
+
+								if(count($result) > 0)
 								{
-									$_SESSION['ID'] = $UN ;
-									header("Location: " . "home.php") ;
+									//TODO: password_verify isn't working yet - double check tm
+									if(password_verify($PW, $result[0]['Password']))
+									{
+										$_SESSION['username'] = $UN ;
+										header("Location: " . "home.php") ;
+									}
+									else
+									{
+										echo "<p class='text-center text-danger'>Username or Password is incorrect.</p><br>" ;
+									}
 								}
 								else
 								{
-									echo "Username or Password is incorrect.<br>" ;
+									echo "<p class='text-center text-danger'>The username " . $UN .
+										" does not exist. Please register.</p>";
 								}
 							}
 							catch(PDOException $e)
