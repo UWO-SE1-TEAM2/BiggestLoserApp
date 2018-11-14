@@ -2,7 +2,7 @@
 	session_start()  ;
 	require_once('initialize.php') ;
 	global $db ;
-	if(!isset($_SESSION['ID']))
+	if(!isset($_SESSION['username']))
 	{
 		header("Location:" . "index.php") ;
 	}
