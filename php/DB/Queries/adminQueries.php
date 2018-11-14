@@ -13,7 +13,7 @@
         try {
             $query = "CALL InsertAdminToGroup(?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username, $groupName])
+            $stmt->execute([$username, $groupName]);
             return true;
         } catch (PDOException $e){
             db_disconnect();

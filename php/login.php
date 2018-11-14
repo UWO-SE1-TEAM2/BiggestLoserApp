@@ -1,3 +1,10 @@
+<?PHP
+	session_start()  ;
+	$dir = realpath(__DIR__ . '/../..').'/DB' ;
+	$pdir = dirname(__FILE__) ;
+	require_once('initialize.php') ;
+?>
+
 <!DOCTYPE html>
 
     <head>

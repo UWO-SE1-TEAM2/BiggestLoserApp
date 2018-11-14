@@ -39,7 +39,7 @@
         global $db;
         try{
             // $query = "UPDATE Group SET Name = ?, Winner = ?, EndDate = ?, IsArchived = ?";
-            $query = "CALL UpdateGroupUser(?,?,?,?)"
+            $query = "CALL UpdateGroupUser(?,?,?,?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$name, $winner, $endDate, $isArchived]);
             return true;
@@ -59,7 +59,7 @@
             return $stmt->fetchAll();
         } catch (PDOException $e){
             db_disconnect();
-            exit9"aborting: There was a database error when retrieving groups.");
+            exit("aborting: There was a database error when retrieving groups.");
         }
     }
 ?>

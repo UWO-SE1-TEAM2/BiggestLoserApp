@@ -17,7 +17,7 @@
         global $db;
         try{
             // $query = "DELETE FROM User WHERE username = $username";
-            $query = "CALL DeleteUser(?)"
+            $query = "CALL DeleteUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute();
             return true;
