@@ -48,7 +48,7 @@
             $query = "CALL GetUserByUsername(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username]);
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving user.");
@@ -62,7 +62,7 @@
             $query = "CALL GetAllUsers()";
             $stmt = $db->prepare($query);
             $stmt->execute();
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving users.");
