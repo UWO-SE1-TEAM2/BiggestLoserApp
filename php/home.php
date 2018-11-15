@@ -45,6 +45,8 @@
 						<div class="form-group">
 							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
 							<br>
+							<input type="date" name="dateOfWeight" class="form-control">
+							<br>
 							<input type="submit" class="btn btn-info form-control" value="Update Weight">
 						</div>
 						<div class="form-group">
