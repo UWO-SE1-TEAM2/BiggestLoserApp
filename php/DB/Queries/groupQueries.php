@@ -1,5 +1,5 @@
 <?php
-    function InsertGroupUser($name){
+    function InsertGroupUser($name, $startDate){
         global $db;
         // try{
         //     $query = "INSERT INTO Group VALUES (?)";
@@ -11,9 +11,9 @@
         //     exit("Aborting: There was a database error when inserting group.");
         // }
         try{
-            $query = "CALL InsertGroupUser(?)";
+            $query = "CALL InsertGroupUser(?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$name]);
+            $stmt->execute([$name, $startDate]);
             return true;
         } catch (PDOException $e){
             db_disconnect();

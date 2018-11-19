@@ -1,11 +1,11 @@
 <?php
-    function InsertWeight($username, $weight){
+    function InsertWeight($username, $weight, $date){
         global $db;
         try{
             // $query = "INSERT INTO User VALUES (?, ?)";
-            $query = "CALL InsertWeight(?,?)";
+            $query = "CALL InsertWeight(?,?,?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username, $weight]);
+            $stmt->execute([$username, $weight, $date]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
