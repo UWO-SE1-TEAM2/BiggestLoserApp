@@ -1,6 +1,6 @@
 <?PHP
 	session_start()  ;
-	require_once('initialize.php') ;
+	require_once('initialize.php');
 ?>
 <!DOCTYPE html>
 

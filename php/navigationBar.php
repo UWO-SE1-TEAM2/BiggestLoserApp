@@ -11,7 +11,7 @@
 							<li><a href="groupHomePage.php">Group name</a></li><!--Link to group page-->
 						</ul>
 				</li>
-				<li><a href="">Logout</a></li><!--Link to login page-->
+				<li><a href="logout.php">Logout</a></li>     <!--Link to login page-->
 			</ul>
 		</div>
 	</div>
