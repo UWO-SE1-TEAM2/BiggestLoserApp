@@ -10,15 +10,7 @@
 	{
 		$UN = $_SESSION['username'] ;
 	}
-	/*InsertWeight Procedure*/
-	if(isset($_POST["submitBtn"]))
-	{
-		$insertWght = "CALL InsertWeight('".$_POST["username"]."', '".$_POST["weight"]."', '".$_POST["dateOfWeight"]."')";
-		if(mysql_query($db, $insertWght))
-		{
-			header("Location:" . "index.php"):
-		}
-	}
+
 	require_once("initialize.php");
 	
 ?>
@@ -45,7 +37,7 @@
 					<h2 id="username" class="biggestLoser">
 						<?php echo $UN;?>
 					</h2>
-					Current Weight: <!--<em id="weight">No weight data available</em>-->
+					Current Weight: <em id="weight">No weight data available</em>
 					<br>
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
