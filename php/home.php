@@ -10,9 +10,18 @@
 	{
 		$UN = $_SESSION['username'] ;
 	}
-
-	require_once("initialize.php");
 	
+	require_once("initialize.php");
+	/*InsertWeight Procedure*/
+	if(isset($_POST["submitBtn"]))
+	{
+		if(isset($_POST["$UN"]))
+		{
+			$insertWght = "CALL InsertWeight('".$_POST["$UN"]."', '".$_POST["weight"]."', '".$_POST["dateOfWeight"]."')";
+		}
+		
+	}
+	/*end*/
 ?>
 <!DOCTYPE html>
 <html>
