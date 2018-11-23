@@ -10,8 +10,6 @@
 	{
 		$UN = $_SESSION['username'] ;
 	}
-
-	require_once("initialize.php");
 	/*InsertWeight Procedure*/
 	if(isset($_POST["submitBtn"]))
 	{
@@ -21,6 +19,8 @@
 			header("Location:" . "index.php"):
 		}
 	}
+	require_once("initialize.php");
+	
 ?>
 <!DOCTYPE html>
 <html>
