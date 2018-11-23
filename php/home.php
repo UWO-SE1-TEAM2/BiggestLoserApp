@@ -12,6 +12,15 @@
 	}
 
 	require_once("initialize.php");
+	/*InsertWeight Procedure*/
+	if(isset($_POST["submitBtn"]))
+	{
+		$insertWght = "CALL InsertWeight('".$_POST["username"]."', '".$_POST["weight"]."', '".$_POST["dateOfWeight"]."')";
+		if(mysql_query($db, $insertWght))
+		{
+			header("Location:" . "index.php"):
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +45,7 @@
 					<h2 id="username" class="biggestLoser">
 						<?php echo $UN;?>
 					</h2>
-					Current Weight: <em id="weight">No weight data available</em>
+					Current Weight: <!--<em id="weight">No weight data available</em>-->
 					<br>
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
@@ -47,7 +56,7 @@
 							<br>
 							<input type="date" name="dateOfWeight" class="form-control">
 							<br>
-							<input type="submit" class="btn btn-info form-control" value="Update Weight">
+							<input type="submit" name="submitBtn" class="btn btn-info form-control" value="Update Weight">
 						</div>
 						<div class="form-group">
 
