@@ -15,9 +15,16 @@
 	/*InsertWeight Procedure*/
 	if(isset($_POST["submitBtn"]))
 	{
-		if(isset($_POST["$UN"]))
+		if(isset($UN))
 		{
-			$insertWght = "CALL InsertWeight('".$_POST["$UN"]."', '".$_POST["weight"]."', '".$_POST["dateOfWeight"]."')";
+			try
+			{
+				InsertWeight($UN, $_POST["weight"], $_POST["dateOfWeight"]);
+			}
+			catch(PDOException $e)
+			{
+				echo "Database Error." ;
+			}
 		}
 		
 	}
