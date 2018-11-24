@@ -53,7 +53,24 @@
 					<h2 id="username" class="biggestLoser">
 						<?php echo $UN;?>
 					</h2>
-					Current Weight: <em id="weight">No weight data available</em>
+					Current Weight: 
+					<?php
+						try{
+							$returnWght = GetCurrentWeightOfUser($UN);
+						}
+						catch(PDOException $e)
+						{
+							echo "Database failure";
+						}
+						if(isset($returnWght))
+						{
+							echo $returnWght;
+						}
+						else
+						{
+							echo "No weight data available";
+						}
+					?>
 					<br>
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
