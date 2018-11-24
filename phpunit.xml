@@ -6,7 +6,7 @@
         stopOnFailure="false">
     <testsuites>
         <testsuite name="Test suite">
-            <directory>test</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
