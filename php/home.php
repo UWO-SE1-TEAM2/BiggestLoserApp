@@ -53,6 +53,7 @@
 					<h2 id="username" class="biggestLoser">
 						<?php echo $UN;?>
 					</h2>
+					<!--Display Current weight-->
 					Current Weight: 
 					<?php
 						try{
