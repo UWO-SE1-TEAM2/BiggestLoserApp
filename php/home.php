@@ -10,7 +10,7 @@
 	{
 		$UN = $_SESSION['username'] ;
 	}
-	
+
 	require_once("initialize.php");
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
@@ -56,10 +56,10 @@
 				echo "Database Error." ;
 			}
 		}
-		
+
 	}
-	
-	
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -107,10 +107,17 @@
 					</button>
 				</div>
 				<div class="col-md-8" id="col2">
-					<h2>Your Groups: </h2>
-					<ul> <!-- TODO: generate group from DB-->
-						<li><a href="">Group 1</a></li>
-					</ul>
+					<h3>Your Groups: </h3>
+					<form method="post" action="groupHomePage.php">
+						<div class="form-group">
+							<select name="groups" class="form-control" size="10">
+								<!--TODO: generate groups from db and delete static group 1 option -->
+								<option value="Group 1">Group 1</option>
+							</select>
+							<br>
+							<input type="submit" class="btn btn-info form-control" value="Go To Group">
+						</div>
+					</form>
 				</div>
 			</div>
 			<br><br>
