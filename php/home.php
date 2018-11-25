@@ -141,7 +141,7 @@
 									<input type="date" id="startDate" name="startDateInsert" class="form-control" required>
 									<br>
 									<label for="endDate">Biggest Loser End Date:</label>
-									<input type="date" id="endDate" class="form-control" required>
+									<input type="date" id="endDate" name="endDateInsert" class="form-control" required>
 									<br>
 									<input class="btn btn-info form-control" name="createGroupBtn" type="submit" value="Create group">
 								</div>
