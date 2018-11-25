@@ -20,7 +20,7 @@
             $query = "CALL GetCurrentWeightOfUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username]);
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving weight.");
@@ -33,7 +33,7 @@
             $query = "CALL GetAllUsersWithWeightLossInGroup(?,?,?)";
             $stmt = $db->perpare($query);
             $stmt->execute([$groupName, $endDate, $startDate]);
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving data.");
