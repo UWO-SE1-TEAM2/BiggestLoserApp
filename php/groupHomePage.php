@@ -1,3 +1,28 @@
+<?php
+	session_start()  ;
+	require_once('initialize.php') ;
+	global $db ;
+	if(!isset($_SESSION['username']))
+	{
+		header("Location:" . "index.php") ;
+	}
+	else
+	{
+		$UN = $_SESSION['username'] ;
+	}
+
+	require_once("initialize.php");
+	/*Create Group and Insert Users*/
+
+	if(isset($_POST['groups']))
+	{
+		$group = $_POST['groups'];
+		//TODO: need php functions to call all query for all group admins and check if user is an admins
+		//only pring the admin page if the user is an admin
+
+		//TODO: need php functions to get all group members and assign to $members
+	}
+?>
 <html>
 	<head>
 		<meta charset="utf-8" />
@@ -9,7 +34,12 @@
 	<body>
 		<?php include_once 'navigationBar.php';?>
 		<div class="container">
-			<h2 id="groupName">Group 1</h2>
+			<h2 id="groupName">
+				<?php print $group?>
+			</h2>
+			<div id="admin">
+				<?include_once 'groupAdmin.php'?>
+			</div>
 			<div id="graph">
 			</div>
 			<div class = "container">
