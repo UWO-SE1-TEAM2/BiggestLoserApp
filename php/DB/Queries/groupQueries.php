@@ -1,15 +1,6 @@
 <?php
     function InsertGroupUser($name, $startDate){
         global $db;
-        // try{
-        //     $query = "INSERT INTO Group VALUES (?)";
-        //     $stmt = $db->prepare($query);
-        //     $stmt->execute([$name]);
-        //     return true;
-        // } catch (PDOException $e){
-        //     db_disconnect();
-        //     exit("Aborting: There was a database error when inserting group.");
-        // }
         try{
             $query = "CALL InsertGroupUser(?, ?)";
             $stmt = $db->prepare($query);
@@ -56,10 +47,36 @@
             $query = "CALL GetAllGroups()";
             $stmt = $db->prepare($query);
             $stmt->execute();
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("aborting: There was a database error when retrieving groups.");
+        }
+    }
+
+    function GetAllAdminForGroup($groupName){
+        global $db;
+        try {
+            $query = "CALL GetAllAdminForGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving admin data.");
+        }
+    }
+
+    function GetGroupsByUser($username){
+        global $db;
+        try {
+            $query = "CALL GetUserByUsername(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$username]);
+            return $stmt-fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving group data.");
         }
     }
 ?>
