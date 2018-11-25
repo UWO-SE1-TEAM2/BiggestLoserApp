@@ -58,8 +58,6 @@
 		}
 		
 	}
-	
-	
 ?>
 <!DOCTYPE html>
 <html>
