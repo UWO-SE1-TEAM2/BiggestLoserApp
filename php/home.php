@@ -12,6 +12,36 @@
 	}
 	
 	require_once("initialize.php");
+	/*Create Group and Insert Users*/
+	if(isset($_POST["createGroupBtn"]))
+	{
+		try
+		{
+			//Creates Group
+			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"]);
+			//Inserts Users into group
+			$users = $_POST["groupMembers"];
+			$userArr = explode(', ', $users);
+			if(isset($userArr))
+			{
+				try
+				{
+					for($i = 0; $i < count($userArr); $i++)
+					{
+						InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+					}
+				}
+				catch(PDOException $e)
+				{
+					echo "Database Error.";
+				}
+			}
+		}
+		catch(PDOException $e)
+		{
+			echo "Database Error.";
+		}
+	}
 	/*InsertWeight Procedure*/
 	if(isset($_POST["submitBtn"]))
 	{
@@ -28,7 +58,8 @@
 		}
 		
 	}
-	/*end*/
+	
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,24 +85,7 @@
 						<?php echo $UN;?>
 					</h2>
 					<!--Display Current weight-->
-					Current Weight: 
-					<?php
-						try{
-							$returnWght = GetCurrentWeightOfUser($UN);
-						}
-						catch(PDOException $e)
-						{
-							echo "Database failure";
-						}
-						if(isset($returnWght))
-						{
-							echo $returnWght;
-						}
-						else
-						{
-							echo "No weight data available";
-						}
-					?>
+					Current Weight: <em id="currentWeight">No weight data available.</em>
 					<br>
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
@@ -113,7 +127,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="get" action=""><!--Sends info to database-->
+							<form method="post" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>
@@ -124,12 +138,12 @@
 										placeholder="i.e. username, username, username">
 									<br>
 									<label for="startDate">Biggest Loser Start Date:</label>
-									<input type="date" id="startDate" class="form-control" required>
+									<input type="date" id="startDate" name="startDateInsert" class="form-control" required>
 									<br>
 									<label for="endDate">Biggest Loser End Date:</label>
 									<input type="date" id="endDate" class="form-control" required>
 									<br>
-									<input class="btn btn-info form-control" type="button" value="Create group" href="">
+									<input class="btn btn-info form-control" name="createGroupBtn" type="submit" value="Create group">
 								</div>
 								<!--Takes user to group page-->
 							</form>
