@@ -19,7 +19,7 @@
             // $query = "INSERT INTO User VALUES (?, ?)";
             $query = "CALL GetCurrentWeightOfUser(?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username, $weight]);
+            $stmt->execute([$username]);
             return $stmt->fetchAll();
         } catch (PDOException $e){
             db_disconnect();
