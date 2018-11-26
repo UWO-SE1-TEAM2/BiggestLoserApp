@@ -93,4 +93,17 @@
             exit("Aborting: There was a database error when retrieving group data.");
         }
     }
+
+    function UpdateEndDateInGroup($groupName, $endDate){
+        global $db;
+        try {
+            $query = "CALL UpdateEndDateInGroup(?,?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName, $endDate]);
+            return true;
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when updating end date for group.");
+        }
+    }
 ?>
