@@ -7,7 +7,7 @@
         processIsolation="false">
     <testsuites>
         <testsuite name="DB Tests">
-            <file>./php/initialize.php</file>
+            <!-- <file>./php/initialize.php</file> -->
             <directory>tests</directory>
         </testsuite>
     </testsuites>

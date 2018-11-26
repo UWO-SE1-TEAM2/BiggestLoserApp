@@ -45,17 +45,39 @@ class UserTest extends TestCase
     //     }
     // }
 
-    public function testCreateNewUser()
+    public function testValidUser()
     {   
         // $this->getConnection();
         // $this->assertTrue($this->InsertUser("unitTest", "test"));
         $this->assertTrue(InsertUser("unitTest", "test"));
+        DeleteUser("unitTest");
     }
 
-    public function testDeleteUser()
+    public function testDuplicateUser()
     {
-        // $this->getConnection();
-        // $this->assertTrue($this->DeleteUser("unitTest"));
-        $this->assertTrue(DeleteUser("unitTest"));
+        InsertUser("unitTest", "test");
+        InsertUser("unitTest", "test");
+        $this->expectException();
+        DeleteUser("unitTest");
     }
+
+    public function testUsernameLength()
+    {
+        InsertUser("testingTheLengthOfAUsernameMustBeUnder20", "Test");
+        $this->expectException();
+    }
+
+    public function testNullUser()
+    {
+        InsertUser(null, "test");
+        $this->expectException();
+    }
+
+    public function testNullPassword()
+    {
+        InsertUser("unitTest", null);
+        $this->expectException();
+    }
+
+
 }
