@@ -1,10 +1,10 @@
 <?php
-    function InsertGroupUser($name, $startDate){
+    function InsertGroupUser($name, $startDate, $endDate){
         global $db;
         try{
-            $query = "CALL InsertGroupUser(?, ?)";
+            $query = "CALL InsertGroupUser(?,?,?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$name, $startDate]);
+            $stmt->execute([$name, $startDate, $endDate]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
