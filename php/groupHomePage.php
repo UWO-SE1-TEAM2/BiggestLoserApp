@@ -33,21 +33,73 @@
 				}
 			}
 			//TODO: need php functions to get all group members and assign to $members
+			$dates = GetStartAndEndDateFromGroup($group);
+			print_r($dates);
 		}
 		else
 		{
-			// code...
+			print "<p class='text-center text-danger'>Error getting the group informat from
+			the database.</p>";
 		}
 
 	    if (isset($_POST['btnAddAdmin']))
 		{
-	        $insert = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
-			if($insert)
+	        $insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
+			if($insertAdmin)
 			{
-				print "<p class='text-center text-danger'>New admin successfully added</p>";
+				print "<p class='text-center text-danger'>New admin successfully added.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error adding a new group admin.
+				Please try again later.</p>";
 			}
 	    }
 
+		if (isset($_POST['btnDeleteAdmin']))
+		{
+	        $deleteAdmin = DeleteAdminFromGroup($_POST['selectDeleteAdmin'], $group);
+			if($deleteAdmin)
+			{
+				print "<p class='text-center text-danger'>Admin successfully deleted.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error deleting a group admin.
+				Please try again later.</p>";
+			}
+	    }
+
+		if(isset($_POST['btnDeleteUser']))
+		{
+			$deleteUser = DeleteUserFromGroup($_POST['selectDeleteUser'], $group);
+			if($deleteUser)
+			{
+				print "<p class='text-center text-danger'>User successfully deleted.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error deleting a user.
+				Please try again later.</p>";
+			}
+		}
+
+		if(isset($_POST['btnAddUser']))
+		{
+			$newUser = trim($_POST['txtAddUser'], " ");
+			$addUser = InsertUserIntoGroup($newUser, $group);
+			if($addUser)
+			{
+				print "<p class='text-center text-danger'>User successfully added.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error adding a user.
+				Please try again later.</p>";
+			}
+		}
+
+		//TODO: Add function to update end date
 	}
 ?>
 <html>

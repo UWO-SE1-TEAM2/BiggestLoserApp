@@ -6,6 +6,10 @@
 	data-target="#deleteAdminDiv">
 	Delte Group Admin
 </button>
+<button type="button" id="addUser" class="btn btn-primary" data-toggle="modal"
+	data-target="#addUserDiv">
+	Delete User
+</button>
 <button type="button" id="deleteUser" class="btn btn-primary" data-toggle="modal"
 	data-target="#deleteUserDiv">
 	Delete User
@@ -29,9 +33,8 @@
 
 						</select>
 						<input class="btn btn-info form-control" name="btnAddAdmin" id="btnAddAdmin"
-						 	type="submit" value="Add Admin">
+						 	type="submit" value="Add New Admin">
 					</div>
-					<!--Takes user to group page-->
 				</form>
 			</div>
 		</div>
@@ -61,7 +64,6 @@
 						<input class="btn btn-info form-control" name="btnDeleteAdmin" id="btnDeleteAdmin"
 						 	type="submit" value="Delete Admin">
 					</div>
-					<!--Takes user to group page-->
 				</form>
 			</div>
 		</div>
@@ -84,7 +86,25 @@
 						<input class="btn btn-info form-control" name="btnDeleteUser"
 						 	id="btnDeleteUser" type="submit" value="Delete User">
 					</div>
-					<!--Takes user to group page-->
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="addUserDiv" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Add User</h3>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="groupHomePage.php"><!--Sends info to database-->
+					<div class="form-group">
+						<input type="text" class="form-control" name="txtAddUser">
+						<input class="btn btn-info form-control" name="btnAddUser"
+						 	id="btnAddUser" type="submit" value="Add User">
+					</div>
 				</form>
 			</div>
 		</div>
@@ -103,10 +123,9 @@
 						<!--TODO: generate drop down with group members usernames-->
 						<label for="newEndDate">Update End Date</label>
 						<input id="newEndDate" name="newEndDate" type="date">
-						<input class="btn btn-info form-control" name="btnUpdateAdmin" id="btnUpdateAdmin"
+						<input class="btn btn-info form-control" name="btnUpdateEndDate" id="btnUpdateEndDate"
 							type="submit" value="updateEndDate">
 					</div>
-					<!--Takes user to group page-->
 				</form>
 			</div>
 		</div>
