@@ -18,7 +18,9 @@
 		try
 		{
 			//Creates Group
-			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"]);
+			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
+			//Adds creater to admin group
+			InsertAdminToGroup($UN, $_POST['groupName']);
 			//Inserts Users into group
 			$users = $_POST["groupMembers"];
 			$userArr = explode(', ', $users);
@@ -59,7 +61,8 @@
 
 	}
 
-
+	$groups = GetGroupsByUser($UN);
+	print_r($groups);
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,7 +93,7 @@
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
 					<br>
-					<form method="post" action=""> <!-- Sends info to database -->
+					<form method="post" action="home.php"> <!-- Sends info to database -->
 						<div class="form-group">
 							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
 							<br>
@@ -112,7 +115,14 @@
 						<div class="form-group">
 							<select name="groups" class="form-control" size="10">
 								<!--TODO: generate groups from db and delete static group 1 option -->
-								<option value="Group 1">Group 1</option>
+								<?php
+									for($i = 0; $i < count($groups); $i++)
+									{
+										print "<option value='" . $groups[$i]['GroupName'] . "'>";
+										print $groups[$i]['GroupName'];
+										print "</option>";
+									}
+								 ?>
 							</select>
 							<br>
 							<input type="submit" class="btn btn-info form-control" value="Go To Group">
@@ -134,7 +144,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="post" action=""><!--Sends info to database-->
+							<form method="get" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>

@@ -13,27 +13,25 @@
 
 	require_once("initialize.php");
 
-	/*
-		gets the group user name
-	*/
-	if ($_SERVER['REQUEST_METHOD'] === 'POST')
+	if ($_SERVER['REQUEST_METHOD'] === 'GET')
 	{
-	    //something posted
-		if(isset($_POST['groups']))
+		if(isset($_GET['groups']))
 		{
-			$group = $_POST['groups'];
+			$group = $_GET['groups'];
 			$admins = GetAllAdminForGroup($group);
-			print_r($admins);
 			$isAdmin = false;
 			for($i = 0; $i < count($admins[0]); $i++)
 			{
-				if($admins[0]['Username'] == $UN)
+				if($admins[$i]['Username'] == $UN)
 				{
 					$isAdmin = true;
 				}
 			}
 			//TODO: need php functions to get all group members and assign to $members
 			$dates = GetStartAndEndDateFromGroup($group);
+			$startDate = $dates[0]['StartDate'];
+			$endDate = $dates[0]['EndDate'];
+			//TODO: delete the print statement
 			print_r($dates);
 		}
 		else
@@ -41,7 +39,10 @@
 			print "<p class='text-center text-danger'>Error getting the group informat from
 			the database.</p>";
 		}
+	}
 
+	if ($_SERVER['REQUEST_METHOD'] === 'POST')
+	{
 	    if (isset($_POST['btnAddAdmin']))
 		{
 	        $insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
