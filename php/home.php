@@ -17,26 +17,45 @@
 	{
 		try
 		{
-			//Creates Group
-			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
-			//Adds creater to admin group
-			InsertAdminToGroup($UN, $_POST['groupName']);
-			//Inserts Users into group
-			$users = $_POST["groupMembers"];
-			$userArr = explode(', ', $users);
-			if(isset($userArr))
+			$allGroups = GetAllGroups();
+			$groupAlreadyExists = FALSE;
+			for($i = 0; $i < count($allGroups); $i++)
 			{
-				try
+				if($allGroups[$i]['Name'] == $_POST['groupName'])
 				{
-					for($i = 0; $i < count($userArr); $i++)
+					$groupAlreadyExists = TRUE;
+					break;
+				}
+			}
+
+			//Creates Group
+			if(!$groupAlreadyExists)
+			{
+				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
+				//Adds creater to admin group
+				InsertAdminToGroup($UN, $_POST['groupName']);
+				//Inserts Users into group
+				$users = $_POST["groupMembers"];
+				$userArr = explode(', ', $users);
+				if(isset($userArr))
+				{
+					try
 					{
-						InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+						for($i = 0; $i < count($userArr); $i++)
+						{
+							InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+						}
+					}
+					catch(PDOException $e)
+					{
+						echo "Database Error.";
 					}
 				}
-				catch(PDOException $e)
-				{
-					echo "Database Error.";
-				}
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>The group name " . $_POST['groupName'] .
+				" is already taken. Please try a different group name.</p>";
 			}
 		}
 		catch(PDOException $e)
@@ -62,7 +81,6 @@
 	}
 
 	$groups = GetGroupsByUser($UN);
-	print_r($groups);
 ?>
 <!DOCTYPE html>
 <html>
@@ -111,7 +129,7 @@
 				</div>
 				<div class="col-md-8" id="col2">
 					<h3>Your Groups: </h3>
-					<form method="post" action="groupHomePage.php">
+					<form method="get" action="groupHomePage.php">
 						<div class="form-group">
 							<select name="groups" class="form-control" size="10">
 								<!--TODO: generate groups from db and delete static group 1 option -->
@@ -144,7 +162,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="get" action=""><!--Sends info to database-->
+							<form method="post" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>

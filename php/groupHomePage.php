@@ -19,20 +19,20 @@
 		{
 			$group = $_GET['groups'];
 			$admins = GetAllAdminForGroup($group);
-			$isAdmin = false;
-			for($i = 0; $i < count($admins[0]); $i++)
+			$isAdmin = FALSE;
+			for($i = 0; $i < count($admins); $i++)
 			{
 				if($admins[$i]['Username'] == $UN)
 				{
-					$isAdmin = true;
+					$isAdmin = TRUE;
+					break;
 				}
 			}
 			//TODO: need php functions to get all group members and assign to $members
+			//TODO: need php to get all the weights for members to create graph
 			$dates = GetStartAndEndDateFromGroup($group);
 			$startDate = $dates[0]['StartDate'];
 			$endDate = $dates[0]['EndDate'];
-			//TODO: delete the print statement
-			print_r($dates);
 		}
 		else
 		{

@@ -55,7 +55,7 @@
 							<?php
 								for($i = 0; $i < count($admins[0]); $i++)
 								{
-									print "<option value=" . $admins[0]['Username'] . ">";
+									print "<option value='" . $admins[0]['Username'] . "'>";
 									print $admins[0]['Username'];
 									print "</option>";
 								}
