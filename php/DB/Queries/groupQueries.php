@@ -1,10 +1,10 @@
 <?php
-    function InsertGroupUser($name, $startDate){
+    function InsertGroupUser($name, $startDate, $endDate){
         global $db;
         try{
-            $query = "CALL InsertGroupUser(?, ?)";
+            $query = "CALL InsertGroupUser(?,?,?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$name, $startDate]);
+            $stmt->execute([$name, $startDate, $endDate]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -71,6 +71,20 @@
         global $db;
         try {
             $query = "CALL GetUserByUsername(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$username]);
+            return $stmt-fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving group data.");
+        }
+    }
+
+    function GetStartAndEndDateFromGroup($groupName)
+    {
+        global $db;
+        try {
+            $query = "CALL GetStartAndDateFromGroup(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username]);
             return $stmt-fetchAll(PDO::FETCH_ASSOC);
