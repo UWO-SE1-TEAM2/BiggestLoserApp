@@ -68,4 +68,17 @@
             exit("Aborting: There was a database error when retrieving users.");
         }
     }
+
+    function GetAllUsersFromGroup($groupName){
+        global $db;
+        try{
+            $query = "CALL GetAllUsersFromGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving users.");
+        }
+    }
 ?>
