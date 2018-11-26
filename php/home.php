@@ -115,6 +115,14 @@
 						<div class="form-group">
 							<select name="groups" class="form-control" size="10">
 								<!--TODO: generate groups from db and delete static group 1 option -->
+								<?php
+									for($i = 0; $i < count($groups); $i++)
+									{
+										print "<option value='" . $groups[$i]['GroupName'] . "'>";
+										print $groups[$i]['GroupName'];
+										print "</option>";
+									}
+								 ?>
 							</select>
 							<br>
 							<input type="submit" class="btn btn-info form-control" value="Go To Group">

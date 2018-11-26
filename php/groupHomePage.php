@@ -22,7 +22,7 @@
 			$isAdmin = false;
 			for($i = 0; $i < count($admins[0]); $i++)
 			{
-				if($admins[0]['Username'] == $UN)
+				if($admins[$i]['Username'] == $UN)
 				{
 					$isAdmin = true;
 				}
