@@ -73,7 +73,7 @@
             $query = "CALL GetUserByUsername(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username]);
-            return $stmt-fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving group data.");
@@ -84,10 +84,10 @@
     {
         global $db;
         try {
-            $query = "CALL GetStartAndDateFromGroup(?)";
+            $query = "CALL GetStartAndEndDateFromGroup(?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$username]);
-            return $stmt-fetchAll(PDO::FETCH_ASSOC);
+            $stmt->execute([$groupName]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("Aborting: There was a database error when retrieving group data.");

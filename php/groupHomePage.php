@@ -12,15 +12,94 @@
 	}
 
 	require_once("initialize.php");
-	/*Create Group and Insert Users*/
 
-	if(isset($_POST['groups']))
+	/*
+		gets the group user name
+	*/
+	if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	{
-		$group = $_POST['groups'];
-		//TODO: need php functions to call all query for all group admins and check if user is an admins
-		//only pring the admin page if the user is an admin
+	    //something posted
+		if(isset($_POST['groups']))
+		{
+			$group = $_POST['groups'];
+			$admins = GetAllAdminForGroup($group);
+			print_r($admins);
+			$isAdmin = false;
+			for($i = 0; $i < count($admins[0]); $i++)
+			{
+				if($admins[0]['Username'] == $UN)
+				{
+					$isAdmin = true;
+				}
+			}
+			//TODO: need php functions to get all group members and assign to $members
+			$dates = GetStartAndEndDateFromGroup($group);
+			print_r($dates);
+		}
+		else
+		{
+			print "<p class='text-center text-danger'>Error getting the group informat from
+			the database.</p>";
+		}
 
-		//TODO: need php functions to get all group members and assign to $members
+	    if (isset($_POST['btnAddAdmin']))
+		{
+	        $insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
+			if($insertAdmin)
+			{
+				print "<p class='text-center text-danger'>New admin successfully added.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error adding a new group admin.
+				Please try again later.</p>";
+			}
+	    }
+
+		if (isset($_POST['btnDeleteAdmin']))
+		{
+	        $deleteAdmin = DeleteAdminFromGroup($_POST['selectDeleteAdmin'], $group);
+			if($deleteAdmin)
+			{
+				print "<p class='text-center text-danger'>Admin successfully deleted.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error deleting a group admin.
+				Please try again later.</p>";
+			}
+	    }
+
+		if(isset($_POST['btnDeleteUser']))
+		{
+			$deleteUser = DeleteUserFromGroup($_POST['selectDeleteUser'], $group);
+			if($deleteUser)
+			{
+				print "<p class='text-center text-danger'>User successfully deleted.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error deleting a user.
+				Please try again later.</p>";
+			}
+		}
+
+		if(isset($_POST['btnAddUser']))
+		{
+			$newUser = trim($_POST['txtAddUser'], " ");
+			$addUser = InsertUserIntoGroup($newUser, $group);
+			if($addUser)
+			{
+				print "<p class='text-center text-danger'>User successfully added.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error adding a user.
+				Please try again later.</p>";
+			}
+		}
+
+		//TODO: Add function to update end date
 	}
 ?>
 <html>
@@ -37,12 +116,17 @@
 	<body>
 		<?php include_once 'navigationBar.php';?>
 		<div class="container">
-			<h2 id="groupName">
+			<h2 id="groupName" class="biggestLoser">
 				<?php print $group?>
 			</h2>
-			<div id="admin">
-				<?php include_once 'groupAdmin.php'?>
-			</div>
+			<?php
+				if($isAdmin)
+				{
+					print "<div id='admin'>";
+					include_once 'groupAdmin.php';
+					print "</div>";
+				}
+			?>
 			<div id="graph">
 			</div>
 			<div class = "container">
