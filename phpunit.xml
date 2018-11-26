@@ -3,9 +3,11 @@
         bootstrap="vendor/autoload.php"
         colors="true"
         verbose='true'
-        stopOnFailure="false">
+        stopOnFailure="false"
+        processIsolation="false">
     <testsuites>
-        <testsuite name="Test suite">
+        <testsuite name="DB Tests">
+            <file>./php/initialize.php</file>
             <directory>tests</directory>
         </testsuite>
     </testsuites>

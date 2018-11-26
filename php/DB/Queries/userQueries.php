@@ -27,13 +27,13 @@
         }
     }
 
-    function UpdatePasswordForUser($password){
+    function UpdatePasswordForUser($password, $username){
         global $db;
         try{
             // $query = "UPDATE User SET Password = ?";
             $query = "CALL UpdatePasswordForUser(?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$password]);
+            $stmt->execute([$password, $username]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
