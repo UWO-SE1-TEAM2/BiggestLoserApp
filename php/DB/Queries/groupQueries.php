@@ -79,4 +79,18 @@
             exit("Aborting: There was a database error when retrieving group data.");
         }
     }
+
+    function GetStartAndEndDateFromGroup($groupName)
+    {
+        global $db;
+        try {
+            $query = "CALL GetStartAndDateFromGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$username]);
+            return $stmt-fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving group data.");
+        }
+    }
 ?>
