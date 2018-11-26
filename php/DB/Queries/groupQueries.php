@@ -70,7 +70,7 @@
     function GetGroupsByUser($username){
         global $db;
         try {
-            $query = "CALL GetUserByUsername(?)";
+            $query = "CALL GetGroupsByUser(?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$username]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
