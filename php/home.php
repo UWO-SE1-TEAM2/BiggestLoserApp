@@ -19,14 +19,12 @@
 		$checkName = $_POST["groupName"];
 		if(in_array($checkName, $check))
 		{
-<<<<<<< HEAD
 			echo '<p class="text-center text-danger">That group name already exists. 
 			Please choose a different group name or check if you already have already created that group.<p>';
 		}
 		else
 		{
 			try
-=======
 			//Creates Group
 			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
 			//Adds creater to admin group
@@ -35,7 +33,6 @@
 			$users = $_POST["groupMembers"];
 			$userArr = explode(', ', $users);
 			if(isset($userArr))
->>>>>>> c78c55ee086cd57dc2b0f8e9d4a5c686641e77ef
 			{
 				//Creates Group
 				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST["endDateInsert"]);
