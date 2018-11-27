@@ -15,27 +15,14 @@
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
 	{
-		$check = GetAllGroups();
-		$checkName = $_POST["groupName"];
-		if(in_array($checkName, $check))
-		{
-			echo '<p class="text-center text-danger">That group name already exists. 
-			Please choose a different group name or check if you already have already created that group.<p>';
-		}
-		else
+		if(isset($UN))
 		{
 			try
-			//Creates Group
-			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
-			//Adds creater to admin group
-			InsertAdminToGroup($UN, $_POST['groupName']);
-			//Inserts Users into group
-			$users = $_POST["groupMembers"];
-			$userArr = explode(', ', $users);
-			if(isset($userArr))
 			{
 				//Creates Group
-				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST["endDateInsert"]);
+				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
+				//Adds creater to admin group
+				InsertAdminToGroup($UN, $_POST['groupName']);
 				//Inserts Users into group
 				$users = $_POST["groupMembers"];
 				$userArr = explode(', ', $users);
@@ -47,7 +34,7 @@
 						{
 							InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
 						}
-					}
+					}					
 					catch(PDOException $e)
 					{
 						echo "Database Error.";
@@ -78,7 +65,6 @@
 	}
 
 	$groups = GetGroupsByUser($UN);
-	print_r($groups);
 ?>
 <!DOCTYPE html>
 <html>
@@ -160,7 +146,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="get" action=""><!--Sends info to database-->
+							<form method="post" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>
