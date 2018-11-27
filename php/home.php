@@ -10,7 +10,7 @@
 	{
 		$UN = $_SESSION['username'] ;
 	}
-	
+
 	require_once("initialize.php");
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
@@ -19,12 +19,23 @@
 		$checkName = $_POST["groupName"];
 		if(in_array($checkName, $check))
 		{
+<<<<<<< HEAD
 			echo '<p class="text-center text-danger">That group name already exists. 
 			Please choose a different group name or check if you already have already created that group.<p>';
 		}
 		else
 		{
 			try
+=======
+			//Creates Group
+			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
+			//Adds creater to admin group
+			InsertAdminToGroup($UN, $_POST['groupName']);
+			//Inserts Users into group
+			$users = $_POST["groupMembers"];
+			$userArr = explode(', ', $users);
+			if(isset($userArr))
+>>>>>>> c78c55ee086cd57dc2b0f8e9d4a5c686641e77ef
 			{
 				//Creates Group
 				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST["endDateInsert"]);
@@ -66,8 +77,11 @@
 				echo "Database Error." ;
 			}
 		}
-		
+
 	}
+
+	$groups = GetGroupsByUser($UN);
+	print_r($groups);
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,7 +112,7 @@
 					Progress: <em id="totalWeightDifference">No weight data available.</em>
 					<br>
 					<br>
-					<form method="post" action=""> <!-- Sends info to database -->
+					<form method="post" action="home.php"> <!-- Sends info to database -->
 						<div class="form-group">
 							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
 							<br>
@@ -115,10 +129,24 @@
 					</button>
 				</div>
 				<div class="col-md-8" id="col2">
-					<h2>Your Groups: </h2>
-					<ul> <!-- TODO: generate group from DB-->
-						<li><a href="">Group 1</a></li>
-					</ul>
+					<h3>Your Groups: </h3>
+					<form method="post" action="groupHomePage.php">
+						<div class="form-group">
+							<select name="groups" class="form-control" size="10">
+								<!--TODO: generate groups from db and delete static group 1 option -->
+								<?php
+									for($i = 0; $i < count($groups); $i++)
+									{
+										print "<option value='" . $groups[$i]['GroupName'] . "'>";
+										print $groups[$i]['GroupName'];
+										print "</option>";
+									}
+								 ?>
+							</select>
+							<br>
+							<input type="submit" class="btn btn-info form-control" value="Go To Group">
+						</div>
+					</form>
 				</div>
 			</div>
 			<br><br>
@@ -135,7 +163,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="post" action=""><!--Sends info to database-->
+							<form method="get" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>

@@ -1,9 +1,12 @@
 <?php
 
-class SampleTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class SampleTest extends TestCase
 {
     public function testTrueAssertsToTrue()
     {
         $this->assertTrue(true);
+        $this->assertFalse(false);
     }
 }

@@ -1,19 +1,10 @@
 <?php
-    function InsertGroupUser($name, $startDate){
+    function InsertGroupUser($name, $startDate, $endDate){
         global $db;
-        // try{
-        //     $query = "INSERT INTO Group VALUES (?)";
-        //     $stmt = $db->prepare($query);
-        //     $stmt->execute([$name]);
-        //     return true;
-        // } catch (PDOException $e){
-        //     db_disconnect();
-        //     exit("Aborting: There was a database error when inserting group.");
-        // }
         try{
-            $query = "CALL InsertGroupUser(?, ?)";
+            $query = "CALL InsertGroupUser(?,?,?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$name, $startDate]);
+            $stmt->execute([$name, $startDate, $endDate]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -56,10 +47,63 @@
             $query = "CALL GetAllGroups()";
             $stmt = $db->prepare($query);
             $stmt->execute();
-            return $stmt->fetchAll();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             db_disconnect();
             exit("aborting: There was a database error when retrieving groups.");
+        }
+    }
+
+    function GetAllAdminForGroup($groupName){
+        global $db;
+        try {
+            $query = "CALL GetAllAdminForGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving admin data.");
+        }
+    }
+
+    function GetGroupsByUser($username){
+        global $db;
+        try {
+            $query = "CALL GetGroupsByUser(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$username]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving group data.");
+        }
+    }
+
+    function GetStartAndEndDateFromGroup($groupName)
+    {
+        global $db;
+        try {
+            $query = "CALL GetStartAndEndDateFromGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving group data.");
+        }
+    }
+
+    function UpdateEndDateInGroup($groupName, $endDate){
+        global $db;
+        try {
+            $query = "CALL UpdateEndDateInGroup(?,?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName, $endDate]);
+            return true;
+        } catch (PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when updating end date for group.");
         }
     }
 ?>

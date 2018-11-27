@@ -27,13 +27,13 @@
         }
     }
 
-    function UpdatePasswordForUser($password){
+    function UpdatePasswordForUser($password, $username){
         global $db;
         try{
             // $query = "UPDATE User SET Password = ?";
             $query = "CALL UpdatePasswordForUser(?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$password]);
+            $stmt->execute([$password, $username]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -62,6 +62,19 @@
             $query = "CALL GetAllUsers()";
             $stmt = $db->prepare($query);
             $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e){
+            db_disconnect();
+            exit("Aborting: There was a database error when retrieving users.");
+        }
+    }
+
+    function GetAllUsersFromGroup($groupName){
+        global $db;
+        try{
+            $query = "CALL GetAllUsersFromGroup(?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$groupName]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e){
             db_disconnect();
