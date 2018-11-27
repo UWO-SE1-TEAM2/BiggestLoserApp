@@ -15,31 +15,41 @@
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
 	{
-		try
+		$check = GetAllGroups();
+		$checkName = $_POST["groupName"];
+		if(in_array($checkName, $check))
 		{
-			//Creates Group
-			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"]);
-			//Inserts Users into group
-			$users = $_POST["groupMembers"];
-			$userArr = explode(', ', $users);
-			if(isset($userArr))
+			echo '<p class="text-center text-danger">That group name already exists. 
+			Please choose a different group name or check if you already have already created that group.<p>';
+		}
+		else
+		{
+			try
 			{
-				try
+				//Creates Group
+				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST["endDateInsert"]);
+				//Inserts Users into group
+				$users = $_POST["groupMembers"];
+				$userArr = explode(', ', $users);
+				if(isset($userArr))
 				{
-					for($i = 0; $i < count($userArr); $i++)
+					try
 					{
-						InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+						for($i = 0; $i < count($userArr); $i++)
+						{
+							InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+						}
+					}
+					catch(PDOException $e)
+					{
+						echo "Database Error.";
 					}
 				}
-				catch(PDOException $e)
-				{
-					echo "Database Error.";
-				}
 			}
-		}
-		catch(PDOException $e)
-		{
-			echo "Database Error.";
+			catch(PDOException $e)
+			{
+				echo "Database Error.";
+			}
 		}
 	}
 	/*InsertWeight Procedure*/
