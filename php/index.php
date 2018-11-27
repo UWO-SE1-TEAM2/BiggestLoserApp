@@ -65,7 +65,6 @@
 		                </div>
 		                <div class="form-group">
 							<label>Password</label>
-							<span class="text-right"><a href="forgotPassword.php">Forgot?</a></span>
 		                    <input type="password" name="password" class="form-control" required>
 		                </div>
 		                <div class="form-group">

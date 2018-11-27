@@ -11,6 +11,7 @@
 							<li><a href="groupHomePage.php">Group name</a></li><!--Link to group page-->
 						</ul>
 				</li>
+				<li><a href="changePassword.php">Change Password</a></li>     <!--Link to login page-->
 				<li><a href="logout.php">Logout</a></li>     <!--Link to login page-->
 			</ul>
 		</div>

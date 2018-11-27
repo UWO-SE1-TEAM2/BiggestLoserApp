@@ -1,7 +1,9 @@
 <?PHP
 	session_start()  ;
-	require_once('initialize.php');
+    require_once('initialize.php');
+    include('updatePassword.php');
 ?>
+
 <!DOCTYPE html>
 
 	<head>
@@ -18,12 +20,12 @@
 	</head>
 
 	<body>
-		<?php include_once 'header.php';?>
+        <?php include_once 'navigationBar.php';?>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
-					<p class="text-center">Please fill this form to change your password.</p>
-					<form  method="post" action="forgotPassword.php">
+					<h1 class="text-center">Please fill this form to change your password.</h1>
+					<form  method="post" action="changePassword.php">
 						
 				        <div class="form-group">
 				            <label for="username">Username</label>
@@ -31,23 +33,22 @@
 				            <span id="usernameErr"></span>
 				        </div>
 				        <div class="form-group">
-				            <label for="oldPassword"> old Password</label>
-				            <input id="password" type="password" name="oldPassword" class="form-control" required>
+				            <label for="oldPassword"> Old Password</label>
+				            <input id="oldPassword" type="password" name="oldPassword" class="form-control" required>
 						</div>
 						<div class="form-group">
 				            <label for="newPassword">New Password</label>
-				            <input id="password" type="password" name="newPassword" class="form-control" required>
+				            <input id="newPassword" type="password" name="newPassword" class="form-control" required>
 				        </div>
 				        <div class="form-group">
 				            <label for="confirmNewPassword">Confirm New Password</label>
-				            <input id="confirmPassword" type="password" name="confirmNewPassword" class="form-control" required>
+				            <input id="confirmNewPassword" type="password" name="confirmNewPassword" class="form-control" required>
 							<br>
 				            <p id="confirmMsg" class="text-center"></p>
 				        </div>
 				        <div class="form-group">
-				            <input type="submit" class="btn btn-info form-control" value="Register">
+				            <input id = "submit" type="submit" class="btn btn-info form-control" value="Change Password">
 				        </div>
-				        <p class="text-center"><a href="index.php">Login here</a>.</p>
 					</form>
 				</div>
 			</div>
