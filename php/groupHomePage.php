@@ -18,23 +18,6 @@
 		if(isset($_POST['groups']))
 		{
 			$group = $_POST['groups'];
-			$admins = GetAllAdminForGroup($group);
-			$isAdmin = FALSE;
-			for($i = 0; $i < count($admins); $i++)
-			{
-				if($admins[$i]['Username'] == $UN)
-				{
-					$isAdmin = TRUE;
-					break;
-				}
-			}
-			//TODO: need php functions to get all group members and assign to $members
-			//TODO: need php to get all the weights for members to create graph
-			$dates = GetStartAndEndDateFromGroup($group);
-			$startDate = $dates[0]['StartDate'];
-			$endDate = $dates[0]['EndDate'];
-			$members = GetAllUsersFromGroup($group);
-			print_r($members);
 		}
 		else
 		{
@@ -113,7 +96,39 @@
 			}
 		}
 
-		//TODO: Add function to update end date
+		//TODO: Add function to update end date - finish the code below
+		/*
+		if(isset($_POST['btnUpdateEndDate']))
+		{
+			$addUser = InsertUserIntoGroup($newUser, $group);
+			if($addUser)
+			{
+				print "<p class='text-center text-danger'>User successfully added.</p>";
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>There was an error adding a user.
+				Please try again later.</p>";
+			}
+		}
+		*/
+
+		$admins = GetAllAdminForGroup($group);
+		$isAdmin = FALSE;
+		for($i = 0; $i < count($admins); $i++)
+		{
+			if($admins[$i]['Username'] == $UN)
+			{
+				$isAdmin = TRUE;
+				break;
+			}
+		}
+
+		//TODO: need php to get all the weights for members to create graph
+		$dates = GetStartAndEndDateFromGroup($group);
+		$startDate = $dates[0]['StartDate'];
+		$endDate = $dates[0]['EndDate'];
+		$members = GetAllUsersFromGroup($group);
 	}
 ?>
 <html>
