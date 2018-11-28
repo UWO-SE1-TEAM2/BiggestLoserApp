@@ -4,7 +4,7 @@
 </button>
 <button type="button" id="deleteAdmin" class="btn btn-primary" data-toggle="modal"
 	data-target="#deleteAdminDiv">
-	Delte Group Admin
+	Delete Group Admin
 </button>
 <button type="button" id="addUser" class="btn btn-primary" data-toggle="modal"
 	data-target="#addUserDiv">

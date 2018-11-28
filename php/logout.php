@@ -25,7 +25,7 @@ if(isset($_SESSION['username'])){
     <?php include_once 'header.php';?>
         <div class="form-group">
 
-            <p class = "text-center"><?= 'You have sucessfully logged out!';?></p> 
+            <p class = "text-center text-danger"><?= 'You have sucessfully logged out!';?></p> 
             <p class = "text-center"><a href="index.php">Click here to Login</a></p>
         </div>
     <?php include_once 'footer.php';?>

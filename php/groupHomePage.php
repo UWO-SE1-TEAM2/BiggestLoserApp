@@ -67,7 +67,7 @@
 	        	print "<p class='text-center text-danger'>No admin selection was made.</p>";
 	        }
 	    }
-
+		$admins = GetAllAdminForGroup($group);
 		if(isset($_POST['btnDeleteUser']))
 		{
 			if(isset($_POST['selectDeleteUser']))
@@ -150,7 +150,7 @@
 		}
 
 
-		$admins = GetAllAdminForGroup($group);
+		
 		$isAdmin = FALSE;
 		for($i = 0; $i < count($admins); $i++)
 		{
