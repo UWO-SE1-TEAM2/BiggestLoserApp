@@ -19,7 +19,7 @@
             // $query = "DELETE FROM User WHERE username = $username";
             $query = "CALL DeleteUser(?)";
             $stmt = $db->prepare($query);
-            $stmt->execute();
+            $stmt->execute($username);
             return true;
         } catch (PDOException $e){
             db_disconnect();
@@ -31,9 +31,9 @@
         global $db;
         try{
             // $query = "UPDATE User SET Password = ?";
-            $query = "CALL UpdatePasswordForUser(?)";
+            $query = "CALL UpdatePasswordForUser(?, ?)";
             $stmt = $db->prepare($query);
-            $stmt->execute([$password, $username]);
+			$stmt->execute([password_hash($password, PASSWORD_BCRYPT), $username]);
             return true;
         } catch (PDOException $e){
             db_disconnect();
