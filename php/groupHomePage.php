@@ -13,11 +13,11 @@
 
 	require_once("initialize.php");
 
-	if ($_SERVER['REQUEST_METHOD'] === 'GET')
+	if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	{
-		if(isset($_GET['groups']))
+		if(isset($_POST['groups']))
 		{
-			$group = $_GET['groups'];
+			$group = $_POST['groups'];
 			$admins = GetAllAdminForGroup($group);
 			$isAdmin = FALSE;
 			for($i = 0; $i < count($admins); $i++)
@@ -33,16 +33,15 @@
 			$dates = GetStartAndEndDateFromGroup($group);
 			$startDate = $dates[0]['StartDate'];
 			$endDate = $dates[0]['EndDate'];
+			$members = GetAllUsersFromGroup($group);
+			print_r($members);
 		}
 		else
 		{
 			print "<p class='text-center text-danger'>Error getting the group informat from
 			the database.</p>";
 		}
-	}
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST')
-	{
 	    if (isset($_POST['btnAddAdmin']))
 		{
 	        $insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
@@ -73,6 +72,20 @@
 
 		if(isset($_POST['btnDeleteUser']))
 		{
+			$userIsAdmin = FALSE;
+			for($i = 0; $i < count($admins); $i++)
+			{
+				if($admins[$i]['Username'] == $_POST['selectDeleteUser'])
+				{
+					$userIsAdmin = TRUE;
+				}
+			}
+
+			if($userIsAdmin)
+			{
+				DeleteAdminFromGroup($_POST['selectDeleteUser'], $group);
+			}
+
 			$deleteUser = DeleteUserFromGroup($_POST['selectDeleteUser'], $group);
 			if($deleteUser)
 			{

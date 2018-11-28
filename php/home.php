@@ -9,18 +9,6 @@
 	else
 	{
 		$UN = $_SESSION['username'] ;
-		$weights = GetCurrentWeightOfUser($UN);
-		$countWeights = count($weights);
-		if($countWeights > 0)
-		{
-			$currWeight = $weights[$countWeights - 1]['Weight'];
-			$weightLost = intval($currWeight) - intval($weights[0]['Weight']);
-			$weightExists = TRUE;
-		}
-		else
-		{
-			$weightExists = FALSE;
-		}
 	}
 
 	require_once("initialize.php");
@@ -105,6 +93,20 @@
 	}
 
 	$groups = GetGroupsByUser($UN);
+
+	$weights = GetCurrentWeightOfUser($UN);
+	$countWeights = count($weights);
+	if($countWeights > 0)
+	{
+		$currWeight = $weights[$countWeights - 1]['Weight'];
+		$firstWeight = $weights[0]['Weight'];
+		$weightLost = intval($currWeight) - intval($firstWeight);
+		$weightExists = TRUE;
+	}
+	else
+	{
+		$weightExists = FALSE;
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -149,7 +151,15 @@
 						<?php
 							if($weightExists)
 							{
-								print $weightLost . " lbs lost";
+								print $weightLost . " lbs ";
+								if(intval($currWeight) > intval($firstWeight))
+								{
+									print "gained";
+								}
+								else
+								{
+									print "lost";
+								}
 							}
 							else
 							{
@@ -178,7 +188,7 @@
 				</div>
 				<div class="col-md-8" id="col2">
 					<h2>Your Groups: </h2>
-					<form method="get" action="groupHomePage.php">
+					<form method="post" action="groupHomePage.php">
 						<div class="form-group">
 							<select name="groups" class="form-control" size="8">
 								<!--TODO: generate groups from db and delete static group 1 option -->

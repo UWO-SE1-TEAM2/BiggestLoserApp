@@ -8,7 +8,7 @@
 </button>
 <button type="button" id="addUser" class="btn btn-primary" data-toggle="modal"
 	data-target="#addUserDiv">
-	Delete User
+	Add User
 </button>
 <button type="button" id="deleteUser" class="btn btn-primary" data-toggle="modal"
 	data-target="#deleteUserDiv">
@@ -29,9 +29,22 @@
 				<form method="post" action="groupHomePage.php"><!--Sends info to database-->
 					<div class="form-group" class="form-control" size="10">
 						<!--TODO: generate drop down with group members usernames-->
-						<select name="selectGroupAdmin">
-
+						<label for="selectGroupAdmin">Select New Group Admin</label>
+						<select name="selectGroupAdmin" id="selectGroupAdmin" class="form-control" size="10">
+							<?php
+								for($i = 0 ; $i < count($members) ; $i++)
+								{
+									if($members[$i]['Username'] != $UN)
+									{
+										print "<option value='" . $members[$i]['Username'] . "'>";
+										print $members[$i]['Username'];
+										print "</option>";
+									}
+								}
+							?>
 						</select>
+						<br>
+						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<input class="btn btn-info form-control" name="btnAddAdmin" id="btnAddAdmin"
 						 	type="submit" value="Add New Admin">
 					</div>
@@ -61,6 +74,7 @@
 								}
 							 ?>
 						</select>
+						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<input class="btn btn-info form-control" name="btnDeleteAdmin" id="btnDeleteAdmin"
 						 	type="submit" value="Delete Admin">
 					</div>
@@ -83,6 +97,7 @@
 						<select name="selectDeleteUser" class="form-control" size="10">
 
 						</select>
+						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<input class="btn btn-info form-control" name="btnDeleteUser"
 						 	id="btnDeleteUser" type="submit" value="Delete User">
 					</div>
@@ -101,7 +116,11 @@
 			<div class="modal-body">
 				<form method="post" action="groupHomePage.php"><!--Sends info to database-->
 					<div class="form-group">
-						<input type="text" class="form-control" name="txtAddUser">
+						<!-- TODO: allow add multiple users at once -->
+						<label for="txtAddUser">Username:</label>
+						<input type="text" class="form-control" name="txtAddUser" id="txtAddUser">
+						<br>
+						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<input class="btn btn-info form-control" name="btnAddUser"
 						 	id="btnAddUser" type="submit" value="Add User">
 					</div>
@@ -123,6 +142,8 @@
 						<!--TODO: generate drop down with group members usernames-->
 						<label for="newEndDate">Update End Date</label>
 						<input id="newEndDate" name="newEndDate" type="date">
+						<input type="hidden" name="groups" value= <?php print $group ?> >
+						<br>
 						<input class="btn btn-info form-control" name="btnUpdateEndDate" id="btnUpdateEndDate"
 							type="submit" value="updateEndDate">
 					</div>
