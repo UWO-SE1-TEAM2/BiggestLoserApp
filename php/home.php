@@ -15,7 +15,7 @@
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
 	{
-		try
+		if(isset($UN))
 		{
 			$allGroups = GetAllGroups();
 			$groupAlreadyExists = FALSE;
@@ -57,10 +57,10 @@
 				print "<p class='text-center text-danger'>The group name " . $_POST['groupName'] .
 				" is already taken. Please try a different group name.</p>";
 			}
-		}
-		catch(PDOException $e)
-		{
-			echo "Database Error.";
+			catch(PDOException $e)
+			{
+				echo "Database Error.";
+			}
 		}
 	}
 	/*InsertWeight Procedure*/
