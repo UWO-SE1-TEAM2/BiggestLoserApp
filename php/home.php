@@ -9,6 +9,18 @@
 	else
 	{
 		$UN = $_SESSION['username'] ;
+		$weights = GetCurrentWeightOfUser($UN);
+		$countWeights = count($weights);
+		if($countWeights > 0)
+		{
+			$currWeight = $weights[$countWeights - 1]['Weight'];
+			$weightLost = intval($currWeight) - intval($weights[0]['Weight']);
+			$weightExists = TRUE;
+		}
+		else
+		{
+			$weightExists = FALSE;
+		}
 	}
 
 	require_once("initialize.php");
@@ -19,6 +31,9 @@
 		{
 			$allGroups = GetAllGroups();
 			$groupAlreadyExists = FALSE;
+			/*
+				Checks if the selcted group name already exists or not. Group names must be unique.
+			*/
 			for($i = 0; $i < count($allGroups); $i++)
 			{
 				if($allGroups[$i]['Name'] == $_POST['groupName'])
@@ -34,6 +49,8 @@
 				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
 				//Adds creater to admin group
 				InsertAdminToGroup($UN, $_POST['groupName']);
+				//Adds creater to group
+				InsertUserIntoGroup($UN, $_POST['groupName']);
 				//Inserts Users into group
 				$users = $_POST["groupMembers"];
 				$userArr = explode(', ', $users);
@@ -43,7 +60,17 @@
 					{
 						for($i = 0; $i < count($userArr); $i++)
 						{
-							InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+							$currUsername = GetUserbyUsername($userArr[$i]);
+							if(count($currUsername) > 0)
+							{
+								InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+							}
+							else
+							{
+								print "<p class='text-center text-danger'>The username " .
+								$userArr[$i] . " does not exist and could
+								not be added to the group " . $_POST['groupName'] . ".</p>";
+							}
 						}
 					}
 					catch(PDOException $e)
@@ -57,12 +84,9 @@
 				print "<p class='text-center text-danger'>The group name " . $_POST['groupName'] .
 				" is already taken. Please try a different group name.</p>";
 			}
-			catch(PDOException $e)
-			{
-				echo "Database Error.";
-			}
 		}
 	}
+
 	/*InsertWeight Procedure*/
 	if(isset($_POST["submitBtn"]))
 	{
@@ -102,36 +126,61 @@
 			<div class="row">
 				<div class="col-md-4" id="col1">
 					<!-- TODO: connect GUI to DB -->
-					<h2 id="username" class="biggestLoser">
+					<h2 id="username">
 						<?php echo $UN;?>
 					</h2>
 					<!--Display Current weight-->
-					Current Weight: <em id="currentWeight">No weight data available.</em>
+					Current Weight:
+					<em id="currentWeight">
+						<?php
+							if($weightExists)
+							{
+								print $currWeight . " lbs";
+							}
+							else
+							{
+								print "No weight data available.";
+							}
+						?>
+					</em>
 					<br>
-					Progress: <em id="totalWeightDifference">No weight data available.</em>
+					Progress:
+					<em id="totalWeightDifference">
+						<?php
+							if($weightExists)
+							{
+								print $weightLost . " lbs lost";
+							}
+							else
+							{
+								print "No weight data available";
+							}
+						 ?>
+					</em>
 					<br>
 					<br>
 					<form method="post" action="home.php"> <!-- Sends info to database -->
 						<div class="form-group">
-							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
+							<label for="weight">Weight (lbs)</label>
+							<input type="text" name="weight" id="weight" class="form-control"
+								placeholder="Enter new weight">
 							<br>
-							<input type="date" name="dateOfWeight" class="form-control">
+							<label for="dateOfWeight">Date of Weight</label>
+							<input type="date" id="dateOfWeight" name="dateOfWeight" class="form-control">
 							<br>
-							<input type="submit" name="submitBtn" class="btn btn-info form-control" value="Update Weight">
+							<input type="submit" name="submitBtn" class="btn btn-info form-control"
+								value="Update Weight">
 						</div>
 						<div class="form-group">
 
 						</div>
 					</form>
-					<button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#groupInfo">
-					  Start New Group
-					</button>
 				</div>
 				<div class="col-md-8" id="col2">
-					<h3>Your Groups: </h3>
+					<h2>Your Groups: </h2>
 					<form method="get" action="groupHomePage.php">
 						<div class="form-group">
-							<select name="groups" class="form-control" size="10">
+							<select name="groups" class="form-control" size="8">
 								<!--TODO: generate groups from db and delete static group 1 option -->
 								<?php
 									for($i = 0; $i < count($groups); $i++)
@@ -146,6 +195,13 @@
 							<input type="submit" class="btn btn-info form-control" value="Go To Group">
 						</div>
 					</form>
+
+					<div class="form-group">
+						<button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#groupInfo">
+						  Start New Group
+						</button>
+					</div>
+
 				</div>
 			</div>
 			<br><br>
