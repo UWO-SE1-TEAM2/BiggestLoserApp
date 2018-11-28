@@ -27,91 +27,128 @@
 
 	    if (isset($_POST['btnAddAdmin']))
 		{
-	        $insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
-			if($insertAdmin)
+			if(isset($_POST['selectGroupAdmin']))
 			{
-				print "<p class='text-center text-danger'>New admin successfully added.</p>";
+				$insertAdmin = InsertAdminToGroup($_POST['selectGroupAdmin'], $group);
+				if($insertAdmin)
+				{
+					print "<p class='text-center text-danger'>New admin successfully added.</p>";
+				}
+				else
+				{
+					print "<p class='text-center text-danger'>There was an error adding a new group admin.
+					Please try again later.</p>";
+				}
 			}
 			else
 			{
-				print "<p class='text-center text-danger'>There was an error adding a new group admin.
-				Please try again later.</p>";
+				print "<p class='text-center text-danger'>No admin selection was made.</p>";
 			}
+
 	    }
 
 		if (isset($_POST['btnDeleteAdmin']))
 		{
-	        $deleteAdmin = DeleteAdminFromGroup($_POST['selectDeleteAdmin'], $group);
-			if($deleteAdmin)
+			if(isset($_POST['selectDeleteAdmin']))
 			{
-				print "<p class='text-center text-danger'>Admin successfully deleted.</p>";
+				$deleteAdmin = DeleteAdminFromGroup($_POST['selectDeleteAdmin'], $group);
+				if($deleteAdmin)
+				{
+					print "<p class='text-center text-danger'>Admin successfully deleted.</p>";
+				}
+				else
+				{
+					print "<p class='text-center text-danger'>There was an error deleting a group admin.
+					Please try again later.</p>";
+				}
 			}
-			else
+	        else
 			{
-				print "<p class='text-center text-danger'>There was an error deleting a group admin.
-				Please try again later.</p>";
-			}
+	        	print "<p class='text-center text-danger'>No admin selection was made.</p>";
+	        }
 	    }
 
 		if(isset($_POST['btnDeleteUser']))
 		{
-			$userIsAdmin = FALSE;
-			for($i = 0; $i < count($admins); $i++)
+			if(isset($_POST['selectDeleteUser']))
 			{
-				if($admins[$i]['Username'] == $_POST['selectDeleteUser'])
+				$userIsAdmin = FALSE;
+				for($i = 0; $i < count($admins); $i++)
 				{
-					$userIsAdmin = TRUE;
+					if($admins[$i]['Username'] == $_POST['selectDeleteUser'])
+					{
+						$userIsAdmin = TRUE;
+					}
 				}
-			}
 
-			if($userIsAdmin)
-			{
-				DeleteAdminFromGroup($_POST['selectDeleteUser'], $group);
-			}
+				if($userIsAdmin)
+				{
+					DeleteAdminFromGroup($_POST['selectDeleteUser'], $group);
+				}
 
-			$deleteUser = DeleteUserFromGroup($_POST['selectDeleteUser'], $group);
-			if($deleteUser)
-			{
-				print "<p class='text-center text-danger'>User successfully deleted.</p>";
+				$deleteUser = DeleteUserFromGroup($_POST['selectDeleteUser'], $group);
+				if($deleteUser)
+				{
+					print "<p class='text-center text-danger'>User successfully deleted.</p>";
+				}
+				else
+				{
+					print "<p class='text-center text-danger'>There was an error deleting a user.
+					Please try again later.</p>";
+				}
 			}
 			else
 			{
-				print "<p class='text-center text-danger'>There was an error deleting a user.
-				Please try again later.</p>";
+				print "<p class='text-center text-danger'>No user selection was made.</p>";
 			}
 		}
 
 		if(isset($_POST['btnAddUser']))
 		{
-			$newUser = trim($_POST['txtAddUser'], " ");
-			$addUser = InsertUserIntoGroup($newUser, $group);
-			if($addUser)
+			if(isset($_POST['txtAddUser']))
 			{
-				print "<p class='text-center text-danger'>User successfully added.</p>";
+				$newUser = trim($_POST['txtAddUser'], " ");
+				$addUser = InsertUserIntoGroup($newUser, $group);
+				if($addUser)
+				{
+					print "<p class='text-center text-danger'>User successfully added.</p>";
+				}
+				else
+				{
+					print "<p class='text-center text-danger'>There was an error adding a user.
+					Please try again later.</p>";
+				}
 			}
 			else
 			{
-				print "<p class='text-center text-danger'>There was an error adding a user.
-				Please try again later.</p>";
+				print "<p class='text-center text-danger'>No user selection was made.</p>";
 			}
+
 		}
 
 		//TODO: Add function to update end date - finish the code below
-		/*
+
 		if(isset($_POST['btnUpdateEndDate']))
 		{
-			$addUser = InsertUserIntoGroup($newUser, $group);
-			if($addUser)
+			if(isset($_POST['newEndDate']))
 			{
-				print "<p class='text-center text-danger'>User successfully added.</p>";
+				$updateEndDate = UpdateEndDateInGroup($group, $_POST['newEndDate']);
+				if($updateEndDate)
+				{
+					print "<p class='text-center text-danger'>End date updated successfully.</p>";
+				}
+				else
+				{
+					print "<p class='text-center text-danger'>There was an error updating the end date.
+					Please try again later.</p>";
+				}
 			}
 			else
 			{
-				print "<p class='text-center text-danger'>There was an error adding a user.
-				Please try again later.</p>";
+				print "<p class='text-center text-danger'>No end date was selected.</p>";
 			}
 		}
-		*/
+
 
 		$admins = GetAllAdminForGroup($group);
 		$isAdmin = FALSE;

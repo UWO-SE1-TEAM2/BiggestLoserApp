@@ -66,10 +66,10 @@
 						<!--TODO: generate drop down with group admins usernames-->
 						<select name="selectDeleteAdmin">
 							<?php
-								for($i = 0; $i < count($admins[0]); $i++)
+								for($i = 0; $i < count($admins); $i++)
 								{
-									print "<option value='" . $admins[0]['Username'] . "'>";
-									print $admins[0]['Username'];
+									print "<option value='" . $admins[$i]['Username'] . "'>";
+									print $admins[$i]['Username'];
 									print "</option>";
 								}
 							 ?>
@@ -95,7 +95,14 @@
 					<div class="form-group">
 						<!--TODO: generate drop down with group members usernames-->
 						<select name="selectDeleteUser" class="form-control" size="10">
-
+							<?php
+								for($i = 0; $i < count($members); $i++)
+								{
+									print "<option value='" . $members[$i]['Username'] . "'>";
+									print $members[$i]['Username'];
+									print "</option>";
+								}
+							 ?>
 						</select>
 						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<input class="btn btn-info form-control" name="btnDeleteUser"
@@ -141,11 +148,11 @@
 					<div class="form-group">
 						<!--TODO: generate drop down with group members usernames-->
 						<label for="newEndDate">Update End Date</label>
-						<input id="newEndDate" name="newEndDate" type="date">
+						<input id="newEndDate" name="newEndDate" type="date" class="form-control">
 						<input type="hidden" name="groups" value= <?php print $group ?> >
 						<br>
 						<input class="btn btn-info form-control" name="btnUpdateEndDate" id="btnUpdateEndDate"
-							type="submit" value="updateEndDate">
+							type="submit" value="Update End Date">
 					</div>
 				</form>
 			</div>
