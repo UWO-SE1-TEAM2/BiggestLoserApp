@@ -15,35 +15,66 @@
 	/*Create Group and Insert Users*/
 	if(isset($_POST["createGroupBtn"]))
 	{
-		try
+		if(isset($UN))
 		{
-			//Creates Group
-			InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
-			//Adds creater to admin group
-			InsertAdminToGroup($UN, $_POST['groupName']);
-			//Inserts Users into group
-			$users = $_POST["groupMembers"];
-			$userArr = explode(', ', $users);
-			if(isset($userArr))
+			$allGroups = GetAllGroups();
+			$groupAlreadyExists = FALSE;
+			/*
+				Checks if the selcted group name already exists or not. Group names must be unique.
+			*/
+			for($i = 0; $i < count($allGroups); $i++)
 			{
-				try
+				if($allGroups[$i]['Name'] == $_POST['groupName'])
 				{
-					for($i = 0; $i < count($userArr); $i++)
-					{
-						InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
-					}
-				}
-				catch(PDOException $e)
-				{
-					echo "Database Error.";
+					$groupAlreadyExists = TRUE;
+					break;
 				}
 			}
-		}
-		catch(PDOException $e)
-		{
-			echo "Database Error.";
+
+			//Creates Group
+			if(!$groupAlreadyExists)
+			{
+				InsertGroupUser($_POST["groupName"], $_POST["startDateInsert"], $_POST['endDateInsert']);
+				//Adds creater to admin group
+				InsertAdminToGroup($UN, $_POST['groupName']);
+				//Adds creater to group
+				InsertUserIntoGroup($UN, $_POST['groupName']);
+				//Inserts Users into group
+				$users = $_POST["groupMembers"];
+				$userArr = explode(', ', $users);
+				if(isset($userArr))
+				{
+					try
+					{
+						for($i = 0; $i < count($userArr); $i++)
+						{
+							$currUsername = GetUserbyUsername($userArr[$i]);
+							if(count($currUsername) > 0)
+							{
+								InsertUserIntoGroup($userArr[$i], $_POST["groupName"]);
+							}
+							else
+							{
+								print "<p class='text-center text-danger'>The username " .
+								$userArr[$i] . " does not exist and could
+								not be added to the group " . $_POST['groupName'] . ".</p>";
+							}
+						}
+					}
+					catch(PDOException $e)
+					{
+						echo "Database Error.";
+					}
+				}
+			}
+			else
+			{
+				print "<p class='text-center text-danger'>The group name " . $_POST['groupName'] .
+				" is already taken. Please try a different group name.</p>";
+			}
 		}
 	}
+
 	/*InsertWeight Procedure*/
 	if(isset($_POST["submitBtn"]))
 	{
@@ -62,7 +93,20 @@
 	}
 
 	$groups = GetGroupsByUser($UN);
-	print_r($groups);
+
+	$weights = GetCurrentWeightOfUser($UN);
+	$countWeights = count($weights);
+	if($countWeights > 0)
+	{
+		$currWeight = $weights[$countWeights - 1]['Weight'];
+		$firstWeight = $weights[0]['Weight'];
+		$weightLost = intval($currWeight) - intval($firstWeight);
+		$weightExists = TRUE;
+	}
+	else
+	{
+		$weightExists = FALSE;
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,36 +128,69 @@
 			<div class="row">
 				<div class="col-md-4" id="col1">
 					<!-- TODO: connect GUI to DB -->
-					<h2 id="username" class="biggestLoser">
+					<h2 id="username">
 						<?php echo $UN;?>
 					</h2>
 					<!--Display Current weight-->
-					Current Weight: <em id="currentWeight">No weight data available.</em>
+					Current Weight:
+					<em id="currentWeight">
+						<?php
+							if($weightExists)
+							{
+								print $currWeight . " lbs";
+							}
+							else
+							{
+								print "No weight data available.";
+							}
+						?>
+					</em>
 					<br>
-					Progress: <em id="totalWeightDifference">No weight data available.</em>
+					Progress:
+					<em id="totalWeightDifference">
+						<?php
+							if($weightExists)
+							{
+								print $weightLost . " lbs ";
+								if(intval($currWeight) > intval($firstWeight))
+								{
+									print "gained";
+								}
+								else
+								{
+									print "lost";
+								}
+							}
+							else
+							{
+								print "No weight data available";
+							}
+						 ?>
+					</em>
 					<br>
 					<br>
 					<form method="post" action="home.php"> <!-- Sends info to database -->
 						<div class="form-group">
-							<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter new weight">
+							<label for="weight">Weight (lbs)</label>
+							<input type="text" name="weight" id="weight" class="form-control"
+								placeholder="Enter new weight">
 							<br>
-							<input type="date" name="dateOfWeight" class="form-control">
+							<label for="dateOfWeight">Date of Weight</label>
+							<input type="date" id="dateOfWeight" name="dateOfWeight" class="form-control">
 							<br>
-							<input type="submit" name="submitBtn" class="btn btn-info form-control" value="Update Weight">
+							<input type="submit" name="submitBtn" class="btn btn-info form-control"
+								value="Update Weight">
 						</div>
 						<div class="form-group">
 
 						</div>
 					</form>
-					<button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#groupInfo">
-					  Start New Group
-					</button>
 				</div>
 				<div class="col-md-8" id="col2">
-					<h3>Your Groups: </h3>
+					<h2>Your Groups: </h2>
 					<form method="post" action="groupHomePage.php">
 						<div class="form-group">
-							<select name="groups" class="form-control" size="10">
+							<select name="groups" class="form-control" size="8">
 								<!--TODO: generate groups from db and delete static group 1 option -->
 								<?php
 									for($i = 0; $i < count($groups); $i++)
@@ -128,6 +205,13 @@
 							<input type="submit" class="btn btn-info form-control" value="Go To Group">
 						</div>
 					</form>
+
+					<div class="form-group">
+						<button type="button" class="form-control btn btn-success" data-toggle="modal" data-target="#groupInfo">
+						  Start New Group
+						</button>
+					</div>
+
 				</div>
 			</div>
 			<br><br>
@@ -144,7 +228,7 @@
 							<h3>Provide Group Info</h3>
 						</div>
 						<div class="modal-body">
-							<form method="get" action=""><!--Sends info to database-->
+							<form method="post" action=""><!--Sends info to database-->
 								<div class="form-group">
 									<label for="groupName">Group Name:</label>
 									<input type="text" name="groupName" class="form-control" required>
