@@ -202,7 +202,7 @@
 								 ?>
 							</select>
 							<br>
-							<input type="submit" class="btn btn-info form-control" value="Go To Group">
+							<input name="goToGroup" type="submit" class="btn btn-info form-control" value="Go To Group">
 						</div>
 					</form>
 

@@ -165,7 +165,6 @@
 		$dates = GetStartAndEndDateFromGroup($group);
 		$startDate = $dates[0]['StartDate'];
 		$endDate = $dates[0]['EndDate'];
-		$members = GetAllUsersFromGroup($group);
 	}
 ?>
 <html>
@@ -204,7 +203,58 @@
 							<th>Weight Lost Progress</th>
 						</tr>
 					</thead>
-					<!--Print the rest of the data with php from DB-->
+					<tbody>
+						<!--Prints out group members and weight progress-->
+						<?php 
+							$sql = "SELECT Username, GroupName FROM UserInGroup";
+							$q = $db->query($sql);
+							$q->setFetchMode(PDO::FETCH_ASSOC);
+						
+							while($r = $q->fetch())
+							{ 
+								$groupCheck = htmlspecialchars($r['GroupName']);
+								if($groupCheck == $_POST['groups'])
+								{ 
+									$members = htmlspecialchars($r['Username']);
+									$weights = GetCurrentWeightOfUser($members);
+									$countWeights = count($weights);
+									if($countWeights > 0)
+									{
+										$currWeight = $weights[$countWeights - 1]['Weight'];
+										$firstWeight = $weights[0]['Weight'];
+										$weightLost = intval($currWeight) - intval($firstWeight);
+										$weightExists = TRUE;
+									}
+									else
+									{
+										$weightExists = FALSE;
+									}?>
+								<tr>
+									<td><?php print $members; ?></td>
+									<td>
+										<?php
+											if($weightExists)
+											{
+												print $weightLost . " lbs ";
+												if(intval($currWeight) > intval($firstWeight))
+												{
+													print "gained";
+												}
+												else
+												{
+													print "lost";
+												}
+											}
+											else
+											{
+												print "No weight data available";
+											}
+										?>
+									</td>
+								</tr>
+								<?php } ?>
+							<?php } ?>
+					</tbody>
 				</table>
 			</div>
 		</div>
