@@ -117,6 +117,8 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<script src="../js/individualGraph.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
 		<link rel="stylesheet" type="text/css"  href="../css/mainStyle.css" />
 	</head>
@@ -145,6 +147,15 @@
 							}
 						?>
 					</em>
+					<?php
+						if($weightExists)
+						{
+							print "<div id='hiddenWeight' style='display:none;'>" ;
+								$jsonWeights = json_encode($weights);
+								print $jsonWeights;
+							print "</div>";
+						}
+					?>
 					<br>
 					Progress:
 					<em id="totalWeightDifference">
@@ -215,9 +226,9 @@
 				</div>
 			</div>
 			<br><br>
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3" id="graphContainer">
-					Graph
+			<div class="row" id="containRow">
+				<div class="col-md-6 col-md" id="graphContainer">
+
 				</div>
 			</div>
 			<!--Popup container-->
