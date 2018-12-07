@@ -1,9 +1,9 @@
 window.onload = function()
 {
-	generateGraph();
+	GenerateGraph();
 }
 
-function generateGraph()
+function GenerateGraph()
 {
 	var data = JSON.parse(document.getElementById("hiddenWeight").innerHTML);
 	document.getElementById("graphContainer").style.width = "100%";
