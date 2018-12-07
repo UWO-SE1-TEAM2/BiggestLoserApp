@@ -8,15 +8,15 @@ function generateGraph()
 	var data = JSON.parse(document.getElementById("hiddenWeight").innerHTML);
 	document.getElementById("graphContainer").style.width = "100%";
 	document.getElementById("graphContainer").style.height = "500px";
-	var divWidth = document.getElementById("graphContainer").offsetWidth;
-	var divHeight = document.getElementById("graphContainer").offsetHeight;
+	var divWidth = document.getElementById("graphContainer").offsetWidth - 150;
+	var divHeight = document.getElementById("graphContainer").offsetHeight - 150;
 	console.log(data);
+	console.log(divWidth);
+	console.log(divHeight);
 	var border = 1;
 	var borderColor = 'black';
 
-	var margin={top:20, right:30, bottom:20, left:100},
-		width = divWidth - margin.left - margin.right,
-		height = divHeight - margin.top - margin.bottom;
+	var margin=50;
 
 	var lineOpacity = "0.25";
 	var lineOpacityHover = "0.85";
@@ -30,53 +30,53 @@ function generateGraph()
 	var circleRadiusHover = 6;
 
 	var x = d3.scaleTime()
-    	.rangeRound([0, width]);
-    //var xAxis = d3.axisBottom(x);
+  	.rangeRound([0, divWidth-margin]);
 
-    var y = d3.scaleLinear()
-    	.rangeRound([height, 0]);
-    //var yAxis = d3.axisBottom(y);
-    var xFormat = "%d-%b-%Y";;
-    var parseTime = d3.timeParse("%Y-%m-%d");
+  var y = d3.scaleLinear()
+  	.rangeRound([divHeight-margin, 0]);
+  var xFormat = "%m/%d/%Y";;
+  var parseTime = d3.timeParse("%Y-%m-%d");
 
-    x.domain(d3.extent(data, function(d) { return parseTime(d.Date); }));
-  	y.domain([0,
-			d3.max(data, function(d) {
-                return d.Weight;
-              })]);
+  x.domain(d3.extent(data, function(d) { return parseTime(d.Date); }));
+	y.domain([d3.min(data, function(d){
+			return d.Weight - 10;
+		}),
+		d3.max(data, function(d) {
+      return d.Weight;
+    })]);
 
 	var svg = d3.select("#graphContainer")
 		.append("svg")
-			.attr("width", divWidth)
-			.attr("height", divHeight)
-			.attr("border", border);
+			.attr("width", divWidth + margin + margin)
+			.attr("height", divHeight + margin + margin)
+			.attr("border", border)
+			.append("g")
+			.attr("transform", `translate(${margin}, ${margin})`);
 
-	var borderPath = svg.append("rect")
-		.attr("x", 0)
-		.attr("y", 0)
-		.attr("height", divHeight)
-		.attr("width", divWidth)
-		.style("fill", "none")
-		.style("stroke", borderColor);
-
-	var g = svg.append("g")
-   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	var line = d3.line()
 		.x(function(d) {return x(parseTime(d.Date)); })
 		.y(function(d) {return y(d.Weight); });
 
-	g.append("path")
+	svg.append("g")
+		.append("path")
 		.data([data])
 		.attr("class", "line")
 		.attr("d", line)
 		.style("stroke", "black")
 		.style("fill", "none");
 
-	g.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).tickFormat(d3.timeFormat(xFormat)));
+	svg.append("g")
+    .attr("transform", `translate(0, ${divHeight-margin})`)
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat(xFormat)).ticks(5));
 
-	g.append("g")
-    .call(d3.axisLeft(y));
+	svg.append("g")
+		.attr("class", "y axis")
+    .call(d3.axisLeft(y).ticks(5))
+		.append('text')
+		.attr("y", 15)
+		.attr('transform', 'rotate(-90)')
+		.attr("fill", "#000")
+		.text("Weight (lbs)");
+
 }
