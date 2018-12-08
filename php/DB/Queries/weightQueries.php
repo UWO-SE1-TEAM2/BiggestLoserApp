@@ -31,7 +31,7 @@
         global $db;
         try{
             $query = "CALL GetAllUsersWithWeightLossInGroup(?,?,?)";
-            $stmt = $db->perpare($query);
+            $stmt = $db->prepare($query);
             $stmt->execute([$groupName, $endDate, $startDate]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e){

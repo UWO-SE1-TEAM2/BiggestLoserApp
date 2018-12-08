@@ -150,7 +150,7 @@
 		}
 
 
-		
+
 		$isAdmin = FALSE;
 		for($i = 0; $i < count($admins); $i++)
 		{
@@ -165,6 +165,9 @@
 		$dates = GetStartAndEndDateFromGroup($group);
 		$startDate = $dates[0]['StartDate'];
 		$endDate = $dates[0]['EndDate'];
+
+		$groupWeights = GetAllUsersWithWeightLossInGroup($group, $endDate, $startDate);
+		$jsonWeights = json_encode($groupWeights);
 	}
 ?>
 <html>
@@ -176,7 +179,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-		<link rel="stylesheet" type="text/css"  href="../css/mainStyle.css" />
+		<link rel="stylesheet" type="text/css"  href="../css/style.css" />
+		<script src="https://d3js.org/d3.v4.js"></script>
+		<script src="../js/groupGraph.js"></script>
 	</head>
 	<body>
 		<?php include_once 'navigationBar.php';?>
@@ -191,8 +196,15 @@
 					include_once 'groupAdmin.php';
 					print "</div>";
 				}
+
+				print "<div id='hiddenWeight' style='display:none'>";
+				print $jsonWeights;
+				print "</div>";
 			?>
-			<div id="graph">
+			<div class="row" id="containRow">
+				<div class="col-md-6 col-md" id="graphContainer">
+
+				</div>
 			</div>
 			<div class = "container">
 				<h2>Weight Lost Progress</h2>
@@ -205,16 +217,16 @@
 					</thead>
 					<tbody>
 						<!--Prints out group members and weight progress-->
-						<?php 
+						<?php
 							$sql = "SELECT Username, GroupName FROM UserInGroup";
 							$q = $db->query($sql);
 							$q->setFetchMode(PDO::FETCH_ASSOC);
-						
+
 							while($r = $q->fetch())
-							{ 
+							{
 								$groupCheck = htmlspecialchars($r['GroupName']);
 								if($groupCheck == $_POST['groups'])
-								{ 
+								{
 									$members = htmlspecialchars($r['Username']);
 									$weights = GetCurrentWeightOfUser($members);
 									$countWeights = count($weights);

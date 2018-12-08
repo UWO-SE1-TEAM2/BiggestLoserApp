@@ -10,24 +10,13 @@ function GenerateGraph()
 	document.getElementById("graphContainer").style.height = "500px";
 	var divWidth = document.getElementById("graphContainer").offsetWidth - 150;
 	var divHeight = document.getElementById("graphContainer").offsetHeight - 150;
-	console.log(data);
-	console.log(divWidth);
-	console.log(divHeight);
 	var border = 1;
 	var borderColor = 'black';
 
 	var margin=50;
 
 	var lineOpacity = "0.25";
-	var lineOpacityHover = "0.85";
-	var otherLinesOpacityHover = "0.1";
 	var lineStroke = "1.5px";
-	var lineStrokeHover = "2.5px";
-
-	var circleOpacity = '0.85';
-	var circleOpacityOnLineHover = "0.25"
-	var circleRadius = 3;
-	var circleRadiusHover = 6;
 
 	var x = d3.scaleTime()
   	.rangeRound([0, divWidth-margin]);
@@ -38,7 +27,8 @@ function GenerateGraph()
   var parseTime = d3.timeParse("%Y-%m-%d");
 
   x.domain(d3.extent(data, function(d) { return parseTime(d.Date); }));
-	y.domain([d3.min(data, function(d){
+	y.domain([d3.min(data, function(d)
+		{
 			return d.Weight - 10;
 		}),
 		d3.max(data, function(d) {
@@ -60,10 +50,13 @@ function GenerateGraph()
 
 	svg.append("g")
 		.append("path")
+		.attr("class", "line")
 		.data([data])
 		.attr("class", "line")
 		.attr("d", line)
 		.style("stroke", "black")
+		.style("stroke-width", lineStroke)
+		.style("opacity", lineOpacity)
 		.style("fill", "none");
 
 	svg.append("g")

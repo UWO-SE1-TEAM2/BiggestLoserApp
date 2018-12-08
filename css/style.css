@@ -1,29 +1,41 @@
-.container {
-	background: rgba(125, 125, 125, 0.35);
-	border-radius: 10px;
+.biggestLoser {
+	font-family: 'Anton', sans-serif;
+	color: #5BC0DE;
 }
-#navbar {
-	background-color: black;
-	border: 0px;
-}
-#col1 {
-	border-right: 30px solid white;
-}
-img {
-	padding: 10px;
-}
-.modal-header {
-	border-bottom: 1px solid black;
-	border-left: 10px solid white;
-	border-right: 10px solid white;
-}
-a { 
-	color: black;
-}
-a:hover {
-	color: #51b0d6;
-	text-decoration: none;
-}
+
 #graphInfo {
 	margin-top: 10px;
+}
+
+svg {
+    font-family: Sans-Serif, Arial;
+}
+.line {
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path {
+  stroke: black;
+}
+
+.text {
+  font-size: 12px;
+}
+
+.title-text {
+  font-size: 12px;
+}
+
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 120px;
+	height: 60px;
+	padding: 5px;
+	font: 12px sans-serif;
+	background: #ddd;
+	border: solid 1px #aaa;
+	border-radius: 8px;
+	pointer-events: none;
 }

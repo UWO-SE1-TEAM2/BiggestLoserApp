@@ -83,6 +83,7 @@
 			try
 			{
 				InsertWeight($UN, $_POST["weight"], $_POST["dateOfWeight"]);
+				print 'inserted weight';
 			}
 			catch(PDOException $e)
 			{
@@ -120,7 +121,7 @@
 		<script src="https://d3js.org/d3.v4.js"></script>
 		<script src="../js/individualGraph.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
-		<link rel="stylesheet" type="text/css"  href="../css/mainStyle.css" />
+		<link rel="stylesheet" type="text/css"  href="../css/style.css" />
 	</head>
 	<body>
 		<!--Navbar container-->
