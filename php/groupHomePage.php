@@ -229,7 +229,7 @@
 									$printWeight[$j]["member"] = $currUser;
 									$j++;
 									$currUser = $groupWeights[$i]['Username'];
-									$firstWeight = $groupWeights[0]['Weight'];
+									$firstWeight = $groupWeights[$i]['Weight'];
 								}
 								elseif($i == count($groupWeights) - 1 && $currUser == $groupWeights[$i]['Username'])
 								{
@@ -246,6 +246,7 @@
 							{
 								print "<tr>";
 								print "<td>";
+
 								print $printWeight[$i]['member'];
 								print "</td>";
 								print "<td>";
