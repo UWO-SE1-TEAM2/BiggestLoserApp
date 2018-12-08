@@ -149,8 +149,6 @@
 			}
 		}
 
-
-
 		$isAdmin = FALSE;
 		for($i = 0; $i < count($admins); $i++)
 		{
@@ -161,11 +159,10 @@
 			}
 		}
 
-		//TODO: need php to get all the weights for members to create graph
 		$dates = GetStartAndEndDateFromGroup($group);
 		$startDate = $dates[0]['StartDate'];
 		$endDate = $dates[0]['EndDate'];
-
+		$groupMembers = GetAllUsersFromGroup($group);
 		$groupWeights = GetAllUsersWithWeightLossInGroup($group, $endDate, $startDate);
 		$jsonWeights = json_encode($groupWeights);
 	}

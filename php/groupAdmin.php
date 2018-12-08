@@ -19,6 +19,7 @@
 	Update End Date
 </button>
 
+
 <div class="modal fade" id="addAdminDiv" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -27,17 +28,17 @@
 			</div>
 			<div class="modal-body">
 				<form method="post" action="groupHomePage.php"><!--Sends info to database-->
-					<div class="form-group" class="form-control" size="10">
-						<!--TODO: generate drop down with group members usernames-->
+					<div class="form-group" size="10">
 						<label for="selectGroupAdmin">Select New Group Admin</label>
 						<select name="selectGroupAdmin" id="selectGroupAdmin" class="form-control" size="10">
 							<?php
-								for($i = 0 ; $i < count($members) ; $i++)
+								for($i = 0 ; $i < count($groupMembers) ; $i++)
 								{
-									if($members[$i]['Username'] != $UN)
+									print $groupMembers[$i]['Username'];
+									if($groupMembers[$i]['Username'] != $UN)
 									{
-										print "<option value='" . $members[$i]['Username'] . "'>";
-										print $members[$i]['Username'];
+										print "<option value='" . $groupMembers[$i]['Username'] . "'>";
+										print $groupMembers[$i]['Username'];
 										print "</option>";
 									}
 								}
@@ -62,9 +63,9 @@
 			</div>
 			<div class="modal-body">
 				<form method="post" action="groupHomePage.php"><!--Sends info to database-->
-					<div class="form-group" class="form-control" size="10">
+					<div class="form-group" size="10">
 						<!--TODO: generate drop down with group admins usernames-->
-						<select name="selectDeleteAdmin">
+						<select name="selectDeleteAdmin" class='form-control'>
 							<?php
 								for($i = 0; $i < count($admins); $i++)
 								{
@@ -96,10 +97,10 @@
 						<!--TODO: generate drop down with group members usernames-->
 						<select name="selectDeleteUser" class="form-control" size="10">
 							<?php
-								for($i = 0; $i < count($members); $i++)
+								for($i = 0; $i < count($groupMembers); $i++)
 								{
-									print "<option value='" . $members[$i]['Username'] . "'>";
-									print $members[$i]['Username'];
+									print "<option value='" . $groupMembers[$i]['Username'] . "'>";
+									print $groupMembers[$i]['Username'];
 									print "</option>";
 								}
 							 ?>
