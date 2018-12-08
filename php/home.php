@@ -41,11 +41,12 @@
 				InsertUserIntoGroup($UN, $_POST['groupName']);
 				//Inserts Users into group
 				$users = $_POST["groupMembers"];
-				$userArr = explode(', ', $users);
-				if(isset($userArr))
+
+				if(isset($users))
 				{
 					try
 					{
+						$userArr = explode(', ', $users);
 						for($i = 0; $i < count($userArr); $i++)
 						{
 							$currUsername = GetUserbyUsername($userArr[$i]);
@@ -83,7 +84,6 @@
 			try
 			{
 				InsertWeight($UN, $_POST["weight"], $_POST["dateOfWeight"]);
-				print 'inserted weight';
 			}
 			catch(PDOException $e)
 			{

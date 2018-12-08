@@ -61,7 +61,7 @@ function GenerateGraph()
 
 	svg.append("g")
     .attr("transform", `translate(0, ${divHeight-margin})`)
-    .call(d3.axisBottom(x).tickFormat(d3.timeFormat(xFormat)).ticks(5));
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat(xFormat)).ticks(10));
 
 	svg.append("g")
 		.attr("class", "y axis")

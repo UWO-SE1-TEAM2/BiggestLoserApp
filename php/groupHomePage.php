@@ -213,56 +213,47 @@
 						</tr>
 					</thead>
 					<tbody>
-						<!--Prints out group members and weight progress-->
 						<?php
-							$sql = "SELECT Username, GroupName FROM UserInGroup";
-							$q = $db->query($sql);
-							$q->setFetchMode(PDO::FETCH_ASSOC);
-
-							while($r = $q->fetch())
+							$printWeight = array();
+							$currUser = $groupWeights[0]['Username'];
+							$firstWeight = $groupWeights[0]['Weight'];
+							$i = 0;
+							$j = 0;
+							while($i < count($groupWeights))
 							{
-								$groupCheck = htmlspecialchars($r['GroupName']);
-								if($groupCheck == $_POST['groups'])
+								if($groupWeights[$i]['Username'] != $currUser)
 								{
-									$members = htmlspecialchars($r['Username']);
-									$weights = GetCurrentWeightOfUser($members);
-									$countWeights = count($weights);
-									if($countWeights > 0)
-									{
-										$currWeight = $weights[$countWeights - 1]['Weight'];
-										$firstWeight = $weights[0]['Weight'];
-										$weightLost = intval($currWeight) - intval($firstWeight);
-										$weightExists = TRUE;
-									}
-									else
-									{
-										$weightExists = FALSE;
-									}?>
-								<tr>
-									<td><?php print $members; ?></td>
-									<td>
-										<?php
-											if($weightExists)
-											{
-												print $weightLost . " lbs ";
-												if(intval($currWeight) > intval($firstWeight))
-												{
-													print "gained";
-												}
-												else
-												{
-													print "lost";
-												}
-											}
-											else
-											{
-												print "No weight data available";
-											}
-										?>
-									</td>
-								</tr>
-								<?php } ?>
-							<?php } ?>
+									$lastWeight = $groupWeights[$i-1]['Weight'];
+									$lost = intval($lastWeight) - intval($firstWeight);
+									$printWeight[$j]["weight"] = $lost;
+									$printWeight[$j]["member"] = $currUser;
+									$j++;
+									$currUser = $groupWeights[$i]['Username'];
+									$firstWeight = $groupWeights[0]['Weight'];
+								}
+								elseif($i == count($groupWeights) - 1 && $currUser == $groupWeights[$i]['Username'])
+								{
+									$lastWeight = $groupWeights[$i]['Weight'];
+									$lost = intval($lastWeight) - intval($firstWeight);
+									$printWeight[$j]["weight"] = $lost;
+									$printWeight[$j]["member"] = $currUser;
+									$j++;
+								}
+								$i++;
+							}
+
+							for($i = 0; $i < count($printWeight); $i++)
+							{
+								print "<tr>";
+								print "<td>";
+								print $printWeight[$i]['member'];
+								print "</td>";
+								print "<td>";
+								print $printWeight[$i]['weight'];
+								print "</td></tr>";
+							}
+
+						 ?>
 					</tbody>
 				</table>
 			</div>
